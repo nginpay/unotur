@@ -1,0 +1,145 @@
+<div id="grid" class="mws-panel grid_8">
+	<div class="mws-panel-header">
+    	<span class="mws-i-24 i-table-1">Relatório de Contas a Receber</span>
+    </div>
+    
+    <div class="mws-panel-body">
+    <div class="dataTables_wrapper">
+    	<div class="dataTables_length">
+			<label>
+				Mostrar 
+				<select id="select-por-pagina" size="1">
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="25">25</option>					
+					<option value="50">50</option>					
+					<option value="100" selected="selected">100</option>					
+				</select> registros
+    		</label>
+    	</div>
+    	<div class="mws-panel-toolbar top clearfix">
+			<ul>				
+				<li><a class="mws-ic-16 ic-arrow-refresh" href="javascript://" title="Atualizar registros">Atualizar</a></li>												
+		    </ul>
+		</div>
+    	<div class="filter">    		    		
+    		<form id="form_consulta" action="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"pagamento-dados", "module"=>"admin"));?>" method="post" enctype="multipart/form-data">
+	    		<input name="pagina" type="hidden" id="pagina">
+				<input name="por-pagina" type="hidden" id="porpagina" value="100">
+				<input name="ordenacao" type="hidden" id="ordenacao">
+	    		
+	    		<div class="mws-panel-body" style="margin:0;">
+                    <div class="mws-form-inline mws-form">                                
+                	    <div class="mws-form-cols clearfix boxFiltro" style="display: none;">                	    
+                	        <div class="mws-form-col-1-8 alpha">
+                			    <label>Vencimento Inicial</label>
+                			    <div class="mws-form-item large">
+                					 <input name="vencimentoInicial" type="text" class="mws-textinput data" /> 
+                			    </div>
+                			</div>
+                			
+                	        <div class="mws-form-col-1-8 alpha">
+                			    <label>Vencimento Final</label>
+                			    <div class="mws-form-item large">
+                					 <input name="vencimentoFinal" type="text" class="mws-textinput data" /> 
+                			    </div>
+                			</div>
+                			
+                	        <div class="mws-form-col-2-8 alpha">
+                			    <label>Contratante</label>
+                			    <div class="mws-form-item large">
+                					 <input name="cliente" type="text" class="mws-textinput" /> 
+                			    </div>
+                			</div>
+                			
+                			
+                			<div class="mws-form-col-1-8 alpha">
+                			    <label>Tipo Pacotes</label>
+                			    <div class="mws-form-item large">
+                					<select id="statuspacote" name="statuspacote" class="full_width">    					    										
+                    			        <option value="">Todos</option>												
+                    			        <option value="aberto">Abertos</option>												
+        			                    <option value="fechado">Fechados</option>												        			                            			                    												        			                    
+                					</select>
+                			    </div>
+                			</div>
+                			
+                			<div class="mws-form-col-3-8 alpha">
+                			    <label>Pacote</label>
+                			    <div class="mws-form-item large">
+                    			    <select id="pacote" name="pacoteId" class="full_width">								
+        								<option value="">Todos pacotes</option>
+        							<?php 
+        								foreach($this->pacotes as $pacote):
+        							?>
+            							<option value="<?php echo $pacote["codigo"]; ?>"><?php echo $pacote["descricao"]; ?></option>
+            						<?php endforeach;?>						
+            						</select>
+        						</div>
+        					</div>
+                			
+                			<div class="mws-form-col-1-8 alpha">
+                			    <label>Forma de Pagamento</label>
+                			    <div class="mws-form-item large">
+                					<select name="tipo" class="full_width">    					    										
+                    			        <option value="">Todas</option>												
+                    			        <option value="À Vista">À Vista</option>												
+        			                    <option value="Cartão">Cartão</option>												
+        			                    <option value="Boleto">Boleto</option>												
+        			                    <option value="Cheque">Cheque</option>	
+                					</select>
+                			    </div>
+                			</div>
+                			
+                			<div class="mws-form-col-2-8 alpha">
+                			    <label>Tipo de Contas</label>
+                			    <div class="mws-form-item large">
+                					<select name="conta" class="full_width">    					    										
+                    			        <option value="">Todas</option>												
+                    			        <option value="pagas">Pagas</option>												
+        			                    <option value="apagar">À Pagar</option>												        			                    
+        			                    <option value="vencidas">Vencidas</option>												        			                    
+                					</select>
+                			    </div>
+                			</div>
+                			
+                			               			
+                		</div>
+                		
+                		<div class="mws-button-row">
+                            <input id="buscar" type="submit" class="mws-button blue" value="Buscar" style="display: none;" />
+                            <input id="limparFiltro" type="button" class="mws-button red" value="Limpar" style="display: none;" />
+                            <input id="filtrar" type="button" class="mws-button orange" value="Filtrar" />
+                            <input data-url="<?php echo $this->url(array("controller"=>"relatorio", "action"=>"relatorio-pagamento")); ?>" id="excel" type="button" class="mws-button green" value="Exportar">
+                		</div> 
+                		
+                	</div>
+                </div>
+	    		
+    		</form>
+    	</div>	        	
+        <table class="mws-datatable-fn mws-table">
+            <thead>
+                <tr>                	               	
+<?php 
+	if(count($this->etiquetas)>0):
+	    foreach($this->etiquetas as $chave => $etiqueta):		
+?> 	
+					<th><?php echo $etiqueta;?></th>
+<?php
+	    endforeach; 
+	endif;
+?> 
+                    <th></th>                                                                                           
+                </tr>
+            </thead>
+            <tbody>
+                                                
+            </tbody>
+        </table>
+        <!-- Paginação --> 
+        <div id="paginacao"></div>       	        
+    </div>
+    </div>
+</div>
+<!-- Panels End -->

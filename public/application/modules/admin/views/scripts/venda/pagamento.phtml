@@ -1,0 +1,132 @@
+<div class="mws-panel-body">
+    
+    <div class="mws-form-inline">                                
+	    <div class="mws-form-cols clearfix formPagamento" style="background: #E3E2E2; display: none;">
+	        <input class="edit" type="hidden" id="codigoVendaReceber" />
+	        <div class="default-pagamento">
+    	        <div class="mws-form-col-1-8 alpha">
+    			    <label>* Forma de Pag.</label>
+    			    <div class="mws-form-item large">
+    					<select id="tipoPagamento" class="full_width">
+    					    <option value="À Vista">À Vista</option>												
+        			        <option value="Cartão">Cartão</option>												
+        			        <option value="Boleto">Boleto</option>												
+        			        <option value="Cheque">Cheque</option>	
+    					</select>
+    			    </div>
+    			</div>
+    	        			
+    			<div class="mws-form-col-1-8 alpha">
+    			    <label>Parcela</label>
+    			    <div class="mws-form-item large">
+    					<input id="parcela" type="text" class="mws-textinput numero edit">        					
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-1-8 alpha">
+    			    <label>* Data de Venc.</label>
+    			    <div class="mws-form-item large">
+    					<input id="dataVencimento" type="text" class="mws-textinput data edit">        					
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>* Valor a Pagar (R$)</label>
+    			    <div class="mws-form-item large">
+    					<input id="valorPagamento" type="text" class="mws-textinput dinheiro edit">        					
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-1-8 alpha">
+    			    <label>* Câmbio (R$)</label>
+    			    <div class="mws-form-item large">
+    					<input id="valorcambio" type="text" class="mws-textinput dinheiro">        					
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>Valor a Receber (<span class="moeda"></span>)</label>
+    			    <div class="mws-form-item large">
+    					<input disabled="disabled" id="valorcambiado" type="text" class="mws-textinput dinheiro edit">        					
+    			    </div>
+    			</div>
+    			
+			</div>
+			
+			<div class="box-parcelamento">
+			    <div class="mws-form-col-1-8 alpha">
+    			    <label>* Forma de Pag.</label>
+    			    <div class="mws-form-item large">
+    					<select id="tipoPagamentoParcela" class="full_width">    					    										
+        			        <option value="Boleto">Boleto</option>												
+        			        <option value="Cheque">Cheque</option>
+        			        <option value="Cartão">Cartão</option>	
+    					</select>
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-1-8 alpha">
+    			    <label>* Qtd Parcelas</label>
+    			    <div class="mws-form-item large">
+    					<input maxlength="2" id="parcelaParcela" type="text" class="mws-textinput numero edit">        					
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-1-8 alpha">
+    			    <label>* Venc. Inicial</label>
+    			    <div class="mws-form-item large">
+    					<input id="dataVencimentoParcela" type="text" class="mws-textinput data edit">        					
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>* Valor a Pagar (R$)</label>
+    			    <div class="mws-form-item large">
+    					<input id="valorPagamentoParcela" type="text" class="mws-textinput dinheiro edit">        					
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-1-8 alpha">
+    			    <label>* Câmbio (R$)</label>
+    			    <div class="mws-form-item large">
+    					<input id="valorCambioParcela" type="text" class="mws-textinput dinheiro">        					
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>Valor a Receber (<span class="moeda"></span>)</label>
+    			    <div class="mws-form-item large">
+    					<input disabled="disabled" id="valorReceberParcela" type="text" class="mws-textinput dinheiro edit">        					
+    			    </div>
+    			</div>
+    			    			
+			</div>
+    	   	        
+	    </div>
+		<div class="mws-button-row">
+            <input id="adicionarPagamento" type="button" class="mws-button green" value="Adicionar" style="display: none;" />
+            <input id="gerarParcelas" type="button" class="mws-button blue" value="Gerar Automaticamente" style="display: none;" />
+            <input id="cadastroPagamento" type="button" class="mws-button orange" value="Novo" />
+		</div> 
+	</div>
+
+    <div class="dataTables_wrapper">        
+        <table class="mws-table">
+            <thead>
+                <tr>
+                    <th title="Código">Cód.</th>
+                    <th title="Forma de Pagamento">Forma</th>
+                    <th title="Parcela">Parc</th>
+                    <th title="Data de Vencimento">Venc.</th>                    
+                    <th title="Valor">Valor&nbsp;(R$)</th>
+                    <th title="Vlr Pago">Pago&nbsp;(R$)</th>                                                                                  
+                    <th title="Vlr Câmbio">Câmbio&nbsp;(R$)</th> 
+                    <th title="Pagou">Pago&nbsp;(<span class="moeda"></span>)</th> 
+                    <th title="Data do Pag.">Dt. Pag</th> 
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="pagamentoTbody"></tbody>
+        </table>            
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * Model_Estado - Tabela Estado
+ *  
+ * @author Vilmar
+ * @version 1.0.0 - 04/12/2012
+ */
+class Model_Estado extends Zend_Db_Table_Abstract {
+
+	/**
+	 * Nome da tabela
+	 *
+	 * @var String
+	 */
+	protected $_name = 'estado';
+	const name = 'estado';
+	
+	/**
+	 * Lista das tabelas que mantem referencia a esta tabela
+	 *
+	 * @var Array
+	 */
+	protected $_dependentTables = array ('Model_Cidade');
+}

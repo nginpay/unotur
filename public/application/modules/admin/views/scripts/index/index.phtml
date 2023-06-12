@@ -1,0 +1,119 @@
+<div class="container">
+	<!-- Acesso Rápido -->
+	<div class="mws-report-container clearfix">
+	    
+	            
+        <a class="mws-report">        	
+        	<span class="mws-report-icon mws-ic ic-database-error"></span>            
+            <span class="mws-report-content">
+            	<span class="mws-report-title">Espaço Livre</span>
+                <span class="mws-report-value"><?php echo number_format($this->freediskspace,2,',','.'); ?>g</span>
+            </span>
+        </a>
+	    
+	    <a class="mws-report">        	
+        	<span class="mws-report-icon mws-ic ic-money-dollar"></span>            
+            <span class="mws-report-content">
+            	<span class="mws-report-title">Dólar do Dia</span>
+                <span class="mws-report-value cotacao cotacao-dolar"><?php echo $this->NumeroParaMoeda($this->dolar); ?></span>
+            </span>
+        </a>
+        
+        <a class="mws-report">        	
+        	<span class="mws-report-icon mws-ic ic-money-euro"></span>            
+            <span class="mws-report-content">
+            	<span class="mws-report-title">Euro do Dia</span>
+                <span class="mws-report-value cotacao cotacao-euro"><?php echo $this->NumeroParaMoeda($this->euro); ?></span>
+            </span>
+        </a>
+                
+<?php 
+    if(in_array("admin:atendimento", $this->resources)):
+?>	    	
+    	<a class="mws-report" href="<?php echo $this->url(array("controller"=>"atendimento", "module"=>"admin"),null,true); ?>">        	
+        	<span class="mws-report-icon mws-ic ic-comments"></span>            
+            <span class="mws-report-content">
+            	<span class="mws-report-title">Atendimentos</span>
+                <span class="mws-report-value"><?php echo $this->totalAtendimentos->total;?></span>
+            </span>
+        </a>
+<?php 
+    endif;
+    
+    if(in_array("admin:venda", $this->resources)):
+?>                
+    	<a class="mws-report" href="<?php echo $this->url(array("controller"=>"venda", "module"=>"admin"),null,true); ?>">        	
+        	<span class="mws-report-icon mws-ic ic-coins"></span>            
+            <span class="mws-report-content">
+            	<span class="mws-report-title">Vendas</span>
+                <span class="mws-report-value"><?php echo $this->totalVendas->total;?></span>
+            </span>
+        </a>
+<?php 
+    endif;    
+?>                    	
+               
+    </div>
+    
+    <!-- Painéis -->
+	<div class="mws-panel grid_8" style="min-width: 100%; margin: 2% 2% 0 0;">
+        <?php 
+        foreach($this->atendimentos as $registro):        	        			
+        	echo '<input class="atendimentos" type="hidden" data-name="'.$registro["data"].'" value="'.$registro["qtde"].'" />';
+        endforeach;	
+        ?>
+    	<div class="mws-panel-header">
+        	<span class="mws-i-24 i-graph">Painel de Atendimentos</span>
+        </div>
+        <div class="mws-panel-body">
+        	<div class="mws-panel-content">
+        		<div id="mws-line-chart" style="width:100%; height:300px; "></div>
+        	</div>
+        </div>
+    </div>
+    
+    <div class="mws-panel grid_8" style="min-width: 100%; margin: 2% 2% 0 0;">
+        
+        <?php 
+        foreach($this->vendas as $registro):        	        			
+        	echo '<input class="vendas" type="hidden" data-name="'.$registro["data"].'" value="'.$registro["qtde"].'" />';
+        endforeach;	
+        ?>
+    	<div class="mws-panel-header">
+        	<span class="mws-i-24 i-bar-graph">Painel de Vendas</span>
+        </div>
+        <div class="mws-panel-body">
+        	<div class="mws-panel-content">
+        		<div id="mws-bar-chart" style="width:100%; height:300px; "></div>
+        	</div>
+        </div>
+    </div>
+        
+</div>
+
+<!-- Box cotação -->
+<div style="display: none;" id="dialog-cotacao" title="Cotação do Dia">	
+	<div class="mws-panel-body">
+		<form action="javascript://" class="mws-form" id="formCotacao">														
+			<input name="data" type="hidden" value="<?php echo date('d/m/Y'); ?>">			
+			<div class="mws-form-block">
+<?php
+    $data = date('Y-m-d'); 
+    foreach($this->moedas as $moeda):
+        $cotacao = $moeda->findDependentRowSet("Model_Cotacao",null,$moeda->select()->where("moeda = $moeda->codigo AND data = '$data'"))->current(); 
+?>			                                
+				<div class="mws-form-row">
+					<label><?php echo $moeda->nome; ?> (<?php echo $moeda->sigla; ?>)</label>
+					<div class="mws-form-item large">
+					    <input type="hidden" name="moeda[]" value="<?php echo $moeda->codigo; ?>" />
+						<input name="valor[]" type="text" value="<?php echo (isset($cotacao->valor))?$this->NumeroParaMoeda($cotacao->valor):'0,00'; ?>" class="mws-textinput dinheiro">
+					</div>
+				</div>
+<?php 
+    endforeach; 
+?>																																				
+		    </div>		    
+		</form>
+	</div>
+</div>
+<!-- End cotação -->

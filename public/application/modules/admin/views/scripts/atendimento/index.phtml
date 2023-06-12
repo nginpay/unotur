@@ -1,0 +1,112 @@
+
+<div id="grid" class="mws-panel grid_8">
+	<div class="mws-panel-header">
+    	<span class="mws-i-24 i-table-1">Lista de Registros</span>
+    </div>
+    
+    <div class="mws-panel-body">
+        <div class="dataTables_wrapper">
+        	<div class="dataTables_length">
+    			<label>
+    				Mostrar 
+    				<select id="select-por-pagina" size="1">
+    					<option value="10">10</option>
+    					<option value="25">25</option>					
+    					<option value="100" selected="selected">100</option>
+    				</select> registros
+        		</label>
+        	</div>
+        	<div class="mws-panel-toolbar top clearfix">
+    			<ul>
+    				<li><a id="novo" class="mws-ic-16 ic-accept edit" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"cadastro", "module"=>"admin"));?>" title="Novo">Novo</a></li>
+    				<li><a class="mws-ic-16 ic-arrow-refresh" href="javascript://" title="Atualizar registros">Atualizar</a></li>				    							
+    				<li><a class="mws-ic-16 ic-cross delete" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"excluir", "module"=>"admin"));?>" title="Excluir">Excluir</a></li>
+    				<li><a title="Exportar" href="javascript://" class="mws-ic-16 ic-folder" id="excel" data-url="<?php echo $this->url(array("controller"=>"atendimento","action"=>"relatorio", "module"=>"admin"),null,true); ?>">Exportar</a></li>				
+    		    </ul>
+    		</div>    		
+        	<div class="filter">    		    		
+        		<form id="form_consulta" action="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"index-dados", "module"=>"admin"));?>" method="post" enctype="multipart/form-data">
+    	    		<input name="pagina" type="hidden" id="pagina">
+    				<input name="por-pagina" type="hidden" id="porpagina" value="100">
+    				<input name="ordenacao" type="hidden" id="ordenacao">
+    	    		
+    	    		<div class="mws-panel-body" style="margin:0;">
+                        <div class="mws-form-inline mws-form">                                
+                    	    <div class="mws-form-cols clearfix boxFiltro" style="display: none;">
+                    	    
+                    	        <div class="mws-form-col-2-8 alpha">
+                    			    <label>Data Inicial</label>
+                    			    <div class="mws-form-item large">
+                    					 <input name="dataAtendimentoInicio" type="text" class="mws-textinput data" /> 
+                    			    </div>
+                    			</div>
+                    			
+                    	        <div class="mws-form-col-2-8 alpha">
+                    			    <label>Data Final</label>
+                    			    <div class="mws-form-item large">
+                    					 <input name="dataAtendimentoFim" type="text" class="mws-textinput data" /> 
+                    			    </div>
+                    			</div>
+                    				
+                    	        <div class="mws-form-col-2-8 alpha">
+                    			    <label>Cliente</label>
+                    			    <div class="mws-form-item large">
+                    					 <input name="cliente" type="text" class="mws-textinput" /> 
+                    			    </div>
+                    			</div>
+                    				
+                    	        <div class="mws-form-col-2-8 alpha">
+                    			    <label>Atendente</label>
+                    			    <div class="mws-form-item large">
+                        			    <select name="usuario" class="full_width">								
+            								<option value="">Todos atendentes</option>
+            							<?php 
+            								foreach($this->usuarios as $usuario):
+            							?>
+                							<option value="<?php echo $usuario["usuario"]; ?>"><?php echo $usuario["nome"]; ?></option>
+                						<?php endforeach;?>						
+                						</select>
+            						</div>
+            					</div>                			
+                    		</div>
+                    		
+                    		<div class="mws-button-row">
+                                <input id="buscar" type="submit" class="mws-button green" value="Buscar" style="display: none;" />
+                                <input id="limparFiltro" type="button" class="mws-button blue" value="Limpar" style="display: none;" />
+                                <input id="filtrar" type="button" class="mws-button red" value="Filtrar" />                                
+                    		</div> 
+                    		
+                    	</div>
+                    </div>
+    	    		
+        		</form>
+        	</div>	        	
+            <table class="mws-datatable-fn mws-table">
+                <thead>
+                    <tr>
+                    	<th title=""><input id="selectAll" type="checkbox"></th>                	
+    <?php 
+    	if(count($this->etiquetas)>0):
+    	foreach($this->etiquetas as $chave => $etiqueta):		
+    ?> 	
+    					<th char="<?php echo $chave;?>" class="sorting"><?php echo $etiqueta;?></th>
+    <?php
+    	endforeach; 
+    	endif;
+    ?>	                
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                                    
+                </tbody>
+            </table>
+            <!-- Paginação --> 
+            <div id="paginacao"></div>       	        
+        </div>
+    </div>
+</div>
+<!-- Panels End -->
+
+<!-- Box cadastro -->
+<div id="cadastro"></div>

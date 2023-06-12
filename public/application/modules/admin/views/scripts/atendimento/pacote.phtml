@@ -1,0 +1,61 @@
+<div class="mws-panel-body">    
+    <div class="mws-form-inline">                                
+        <div class="mws-form-cols clearfix formPacote" style="background: #E3E2E2; display: none;">
+            <input type="hidden" id="idAtendimentoPacote" />
+            
+            <div class="mws-form-col-3-8 alpha">				    
+                <label>* Tipo de Pacote</label> 				    					    
+                <div class="mws-form-item large">				    	
+                    <select id="tipo_pacote" class="chosen-tipo-pacote">
+                        <option value="">Selecione</option>	
+                        <?php
+                        if (count($this->tipos) > 0):
+                            $selected = '';
+                            foreach ($this->tipos as $tipo):                                
+                                ?>                        
+                                <option value="<?php echo $tipo["codigo"]; ?>">
+                                    <?php echo $tipo["nome"]; ?>
+                                </option>
+                                <?php
+                            endforeach;
+                        endif;
+                        ?>													
+                    </select>        											
+                </div>
+            </div>
+            
+            <div class="mws-form-col-1-8 alpha">
+                <label>* Data</label>
+                <div class="mws-form-item large">
+                    <input id="pacoteData" type="text" class="mws-textinput data">        					
+                </div>
+            </div>
+             
+            <div class="mws-form-col-4-8 alpha">
+                <label>* Destino</label>
+                <div class="mws-form-item large">
+                    <input id="pacoteDestino" type="text" class="mws-textinput">        					
+                </div>
+            </div>			
+        </div>
+        <div class="mws-button-row">
+            <input id="adicionarPacote" type="button" class="mws-button green" value="Adicionar" style="display: none;" />            
+            <input id="cadastroPacote" type="button" class="mws-button orange" value="Novo" />
+        </div> 
+    </div>
+
+    <div class="dataTables_wrapper">
+
+        <table class="mws-table">
+            <thead>
+                <tr>
+                    <th title="Tipo">Tipo Pacote</th>
+                    <th title="Destino">Destino</th>                                       
+                    <th title="Data">Data</th>                                       
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="pacoteTbody"></tbody>
+        </table>           
+    </div>
+</div>

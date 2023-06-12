@@ -1,0 +1,94 @@
+<div class="mws-panel-body">
+    <div class="mws-form-inline">                                
+	    <div class="mws-form-cols clearfix formProduto" style="background: #E3E2E2; display: none;">
+	        <input type="hidden" id="codigoProduto" />
+	        
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>* Passageiro</label>
+			    <div class="mws-form-item large">
+					<select id="passageiro" class="full_width chzn-select">
+                        <option value="">Selecione o passageiro</option> 		
+					</select>
+			    </div>
+			</div>	
+	        
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>* Produto</label>
+			    <div class="mws-form-item large">
+					<select id="tipoProduto" class="full_width">
+					    <option selected="selected" value="pacote">Pacote</option>												
+        			    <option value="hospedagem">Hospedagem</option>												
+        			    <option value="transporte">Transporte</option>												
+        			    <option value="servico">Serviços</option>	
+					</select>
+			    </div>
+			</div>
+	        	           		  
+		    <input type="hidden" id="urlProduto" />
+		    <div class="mws-form-col-2-8 alpha">
+			    <label>Empresa</label>
+			    <div class="mws-form-item large">
+					 <select id="produto" class="selectProduto"></select>
+			    </div>
+			</div>	
+			
+			<div class="mws-form-col-1-8 alpha">
+			    <label>Descrição</label>
+			    <div class="mws-form-item large">
+					<input id="descricaoProduto" type="text" class="mws-textinput">        					
+			    </div>
+			</div>
+			
+			<div class="mws-form-col-1-8 alpha">
+			    <label>Moeda</label>
+			    <div class="mws-form-item large">
+					<select id="moeda" class="full_width">
+<?php 
+	foreach($this->moedas as $moeda):
+	    $selected = null;
+		if($moeda["codigo"] == 2){
+		    $selected = "selected='selected'";
+		}    					
+?>
+    					<option <?php echo $selected; ?> value="<?php echo $moeda["codigo"]; ?>"><?php echo $moeda["sigla"]; ?></option>
+<?php 
+    endforeach;
+?>	
+					</select>
+			    </div>
+			</div>
+			
+			<div class="mws-form-col-1-8 alpha">
+			    <label>* Valor</label>
+			    <div class="mws-form-item large">
+					<input id="valorProduto" type="text" class="mws-textinput dinheiro">        					
+			    </div>
+			</div>
+    	   
+	        
+	    </div>
+		<div class="mws-button-row">
+            <input id="adicionarProduto" type="button" class="mws-button green" value="Adicionar" style="display: none;" />
+            <input type="button" class="mws-button red adicionarPassageiro" value="Combobox Passageiro" style="display: none;" />
+            <input id="cadastroProduto" type="button" class="mws-button orange" value="Novo" />
+		</div> 
+	</div>
+    
+    <div class="dataTables_wrapper">
+        	
+        <table class="mws-table">
+            <thead>
+                <tr>                    
+                    <th title="Passageiro">Passageiro</th>                                        
+                    <th title="Tipo">Tipo</th>                                        
+                    <th title="Produto">Produto</th>                                        
+                    <th title="Descrição">Observação</th>                                        
+                    <th title="Valor">Valor (<span class="moeda"></span>)</th> 
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="produtoTbody"></tbody>
+        </table>                   
+        <input id="moedaSigla" value="U$" type="hidden">             
+    </div>    
+</div>

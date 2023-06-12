@@ -1,0 +1,286 @@
+
+<div class="mws-panel grid_8">
+	<div class="mws-panel-header">
+	    <span class="mws-i-24 i-pencil">Cadastro de Pacote</span>
+	</div>
+	<div class="mws-panel-body">
+<?php 
+    if(!empty($this->registro["codigo"])):    
+?> 	    
+	    <div class="mws-wizard clearfix">
+            <ul>
+                <li id="cadastro" class="current aba">
+                    <a href="javascript://" class="mws-ic-16 ic-pencil" title="Member Profile">Dados Cadastrais</a>
+                </li>
+                <li id="transporte" class="aba">
+                    <a class="mws-ic-16 ic-delivery" href="javascript://" title="Membership Stype">Transporte</a>
+                </li>
+                <li id="hospedagem" class="aba">
+                    <a class="mws-ic-16 ic-house" href="javascript://" title="Membership Stype">Hospedagem</a>
+                </li>
+                <li id="servico" class="aba">
+                    <a class="mws-ic-16 ic-user-business" href="javascript://" title="Membership Stype">Serviços</a>
+                </li>
+                <!--                 
+                <li id="venda" class="aba">
+                    <a class="mws-ic-16 ic-money" href="javascript://" title="Vendas">Vendas</a>
+                </li> 
+                -->               
+            </ul>
+        </div>
+<?php 
+    endif;
+?>        
+          
+    	<form action="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"salvar-cadastro", "module"=>"admin"));?>" class="mws-form" id="formCadastro">		
+    		<input type="hidden" id="cadastro-iframe" value="<?php echo $this->iframe; ?>" />		
+    		<input id="codigo" type="hidden" name="codigo" value="<?php echo $this->registro["codigo"]; ?>" />
+    		<input class="hidden" type="text" id="roteiro" name="roteiro" value="<?php echo $this->registro["roteiro"]?>" />
+    		<div class="mws-form-inline">                                
+			    <div class="cadastro mws-form-cols clearfix abaContent current">				
+    			    
+        			<div class="mws-form-col-3-8 alpha">
+        			    <label>* Descrição</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["descricao"]); ?>" type="text" class="mws-textinput" name="descricao" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>Moeda</label>
+        			    <div class="mws-form-item large">
+            			    <select name="moeda" class="full_width">								
+    							<?php 
+    								foreach($this->moedas as $moeda):
+        								
+        								if($this->registro["moeda"] == $moeda["codigo"]){
+        								    $selected = "selected='selected'";
+        								} elseif(empty($this->registro["codigo"]) && $moeda["codigo"] == 2){
+        								    $selected = "selected='selected'";
+        								} else {
+        								    $selected = "";
+        								}
+    								
+    							?>
+    								<option <?php echo $selected; ?> value="<?php echo $moeda["codigo"]; ?>"><?php echo $moeda["sigla"]; ?></option>
+    							<?php endforeach;?>						
+    						</select>
+						</div>
+					</div>
+			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>Início da venda</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo (!empty($this->registro["datainiciovenda"]))?$this->data($this->registro["datainiciovenda"]):""; ?>" type="text" class="mws-textinput data" name="datainiciovenda">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>Fim da venda</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo (!empty($this->registro["datafimvenda"]))?$this->data($this->registro["datafimvenda"]):""; ?>" type="text" class="mws-textinput data" name="datafimvenda">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>Data de saída</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo (!empty($this->registro["datasaida"]))?$this->data($this->registro["datasaida"]):""; ?>" type="text" class="mws-textinput data" name="datasaida">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>Hora de saída</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["horasaida"]); ?>" type="text" class="mws-textinput hora" name="horasaida" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>Data de chegada</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo (!empty($this->registro["datachegada"]))?$this->data($this->registro["datachegada"]):""; ?>" type="text" class="mws-textinput data" name="datachegada">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>Hora de chegada</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["horachegada"]); ?>" type="text" class="mws-textinput hora" name="horachegada" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>Local de saída</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["localsaida"]); ?>" type="text" class="mws-textinput" name="localsaida" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>* Quantidade de Vagas</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["qtdparticipantes"]); ?>" type="text" class="mws-textinput numero" name="qtdparticipantes" maxlength="11">
+        			    </div>
+        			</div>
+        		            			
+        			<div class="mws-form-col-2-8 omega">				    
+                	    <label>Liderança</label> 				    					    
+                	    <div class="mws-form-item large">				    	
+                			<select class="chzn-select" id="cliente" name="liderpacote">
+                				<option value="">Selecione o líder do pacote</option>	
+<?php 
+if(count($this->clientes) > 0):
+    $selected = '';
+	foreach($this->clientes as $cliente):	
+		$selected = ($this->registro["liderpacote"] == $cliente["codigo"])?"selected='selected'":"";	
+?>                        
+            						<option <?php echo $selected; ?> value="<?php echo $cliente["codigo"];?>">
+            							<?php echo $cliente["nome"];?>
+            						</option>
+<?php		
+	endforeach;
+endif;
+?>													
+        					</select>
+       											
+        			    </div>
+        			</div>
+        			      			
+        			<div class="mws-form-col-1-8 omega">
+        			    <label>Lucro Esperado (%)</label>
+        			    <div class="mws-form-item large">
+        					<input name="lucroesperado" id="lucroEsperado" value="<?php echo $this->NumeroParaMoeda($this->registro["lucroesperado"]); ?>" type="text" class="mws-textinput dinheiro">        					
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-1-8 omega">
+        			    <label>Valor de venda por pessoa</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo $this->NumeroParaMoeda($this->registro["valorvendaindividual"]); ?>" type="text" class="mws-textinput dinheiro" name="valorvendaindividual">        					
+        			    </div>
+        			</div>
+        			        			
+        			<div class="mws-form-col-8-8 omega">
+        				<label>Observações</label>
+        				<div class="mws-form-item large">
+        					<textarea cols="100%" style="height: 20em;" id="texto" name="observacoes"><?php echo stripslashes($this->registro["observacoes"]); ?></textarea>					
+        				</div>				
+        			</div>
+        			
+        			<div class="mws-form-col-8-8 omega">
+    					<input id="uploader" type="button" class="mws-button orange mws-i-24 i-camera-2 large" value="Roteiro">
+    					<span>(Arquivo do roteiro ("pdf, doc, docx, txt"))</span>
+    					<div id="filelist"></div>
+    					<br/>
+    					<?php 
+    					    $roteiro = (empty($this->registro["roteiro"]))?"javascript://":$this->baseUrl($this->registro["roteiro"]);
+    					?>
+    					<a id="pretty" target="<?php echo ($roteiro != "javascript://")?"_blank":""; ?>" href="<?php echo $roteiro;?>" title="Roteiro">
+    						<img width="100" id="imagem" src="http://dummyimage.com/100x100/d6d6d6/686a82.gif&text=Roteiro" />
+    					</a>
+    					<div id="edicao" style="<?php echo ($this->registro['roteiro'] != "/images/foto-default.jpg")?'display:block':'display:none'; ?>">																					
+    						<a style="text-indent:10000px;margin-top:5px;<?php echo (!empty($this->registro['roteiro']))?'display:block':'display:none'; ?>" title="Excluir roteiro" class="mws-ic-16 ic-cancel excluir-roteiro" rel="<?php echo $this->registro["roteiro"];?>" href="javascript://">Excluir</a>					
+    					</div>						
+    				</div>
+			        		
+        	    </div>
+        	</div>
+
+<?php if(!empty($this->registro["codigo"])): ?>        	
+    	    <div class="transporte abaContent">
+    	        <?php
+    	            $pacoteTransportes = array();
+    	            if(!empty($this->registro["codigo"])):
+    	                $pacoteTransportes = $this->registro->findDependentRowSet("Model_PacoteTransporte",null,$this->registro->select()->order("codigo DESC"));
+    	            endif; 
+    	            echo $this->partial("/pacote/transporte.phtml", array("categorias"=>$this->categorias, "pacoteTransportes"=>$pacoteTransportes)); 
+                ?>
+    	    </div>
+    	    <div class="hospedagem abaContent">
+    	        <?php
+        	        $pacoteHospedagens = array();
+        	        if(!empty($this->registro["codigo"])):
+    	                $pacoteHospedagens = $this->registro->findDependentRowSet("Model_PacoteHospedagem",null,$this->registro->select()->order("codigo DESC"));
+        	        endif; 
+    	            echo $this->partial("/pacote/hospedagem.phtml", array("paises"=>$this->paises, "pacoteHospedagens"=>$pacoteHospedagens)); 
+                ?>
+    	    </div>
+    	    <div class="servico abaContent">
+    	        <?php 
+        	        $pacoteServicos = array();
+        	        if(!empty($this->registro["codigo"])):
+    	                $pacoteServicos = $this->registro->findDependentRowSet("Model_PacoteServico",null,$this->registro->select()->order("codigo DESC"));
+        	        endif;
+    	            echo $this->partial("/pacote/servico.phtml", array("servicos"=>$this->servicos, "pacoteServicos"=>$pacoteServicos)); 
+                ?>
+    	    </div>
+    	    <div class="venda abaContent">
+    	        <?php 
+    	        /*
+        	        $produtos = array();
+        	        if(!empty($this->registro["codigo"])):
+    	                $produtos = $this->registro->findDependentRowSet("Model_VendaProduto",null,$this->registro->select()->order("venda DESC")->group("venda"));
+        	        endif;
+    	            echo $this->partial("/pacote/venda.phtml", array("produtos"=>$produtos)); 
+    	            */
+                ?>
+    	    </div>
+<?php endif; ?> 
+    	    
+    	    <div class="mws-form-cols clearfix" style="background: #E3E2E2;">
+    	        <div class="mws-form-col-2-8 alpha">
+    			    <label><strong>Gasto do Pacote (<span class="moeda"></span>)</strong></label>
+    			    <div class="mws-form-item large">
+    					<input disabled="disabled" type="text" class="mws-textinput dinheiro" name="valor">        					
+    			    </div>
+    			</div>
+    			
+    	        <div class="mws-form-col-2-8 alpha">
+    			    <label><strong>Gasto por Vaga (<span class="moeda"></span>)</strong></label>
+    			    <div class="mws-form-item large">
+    					<input id="valorPorVaga" disabled="disabled" type="text" class="mws-textinput dinheiro">        					
+    			    </div>
+    			</div>
+    			
+    	        <div class="mws-form-col-1-8 alpha">
+    			    <label><strong>Valor Cobrado (<span class="moeda"></span>)</strong></label>
+    			    <div class="mws-form-item large">
+    					<input id="valorCobrado" value="<?php echo $this->NumeroParaMoeda($this->registro["valorvendaindividual"]); ?>" disabled="disabled" type="text" class="mws-textinput dinheiro">        					
+    			    </div>
+    			</div>
+    			
+    	        <div class="mws-form-col-1-8 alpha">
+    			    <label><strong>% Ganho</strong></label>
+    			    <div class="mws-form-item large">
+    					<input id="percentualLucro" disabled="disabled" type="text" class="mws-textinput dinheiro">        					
+    			    </div>
+    			</div>
+    			
+    	        <div class="mws-form-col-2-8 alpha">
+    			    <label><strong>Lucro Individual (<span class="moeda"></span>)</strong></label>
+    			    <div class="mws-form-item large">
+    					<input id="lucroIndividual" disabled="disabled" type="text" class="mws-textinput dinheiro">        					
+    			    </div>
+    			</div>    			
+    	    </div>
+   	    
+    	       	    
+    	    <div class="mws-button-row">
+                    <input type="submit" class="mws-button red" value="Enviar" />
+                    <input type="button" class="mws-button blue adicionarLider" value="Cadastrar Liderança" />
+<?php 
+    if(!$this->iframe):
+?>    			
+                    <input id="voltar" type="reset" class="mws-button gray" value="Voltar" onclick="javascript:history.back(-1)" />
+<?php 
+    else:
+?>
+                    <input type="reset" class="mws-button gray" value="Fechar" onclick="window.parent.$('#dialog').dialog('close');" />
+<?php
+    endif; 
+?> 
+    		</div>    	    
+    	</form>    	
+	</div>
+</div>	

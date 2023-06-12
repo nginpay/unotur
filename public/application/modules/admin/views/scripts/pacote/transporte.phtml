@@ -1,0 +1,110 @@
+<div class="mws-panel-body">        		    		
+	<div class="mws-form-inline">                                
+	    <div class="mws-form-cols clearfix formTransporte" style="background: #E3E2E2; display: none;">
+	        <input type="hidden" id="idPacoteTransporte" />
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>Transporte</label>
+			    <div class="mws-form-item large">
+					<select id="categoriaTransporte" class="full_width">
+					    <?php 
+if(count($this->categorias) > 0):    
+	foreach($this->categorias as $transporte):				
+?>                        
+            			<option value="<?php echo $transporte["codigo"];?>">
+            				<?php echo $transporte["nome"];?>
+            			</option>
+<?php		
+	endforeach;
+endif;
+?>	
+					</select>
+			    </div>
+			</div>
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>* Empresa</label>
+			    <div class="mws-form-item large">
+					<select id="transporte" class="full_width chzn-select">
+					    <option>Selecione um transporte</option>   
+					</select>
+			    </div>
+			</div>
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>* Origem</label>
+			    <div class="mws-form-item large">
+					<input id="transporteOrigem" type="text" class="mws-textinput">        					
+			    </div>
+			</div>
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>* Destino</label>
+			    <div class="mws-form-item large">
+					<input id="transporteDestino" type="text" class="mws-textinput">        					
+			    </div>
+			</div>
+			
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>Data Saída</label>
+			    <div class="mws-form-item large">
+					<input id="transporteDataSaida" type="text" class="mws-textinput data">        					
+			    </div>
+			</div>
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>Hora Saída</label>
+			    <div class="mws-form-item large">
+					<input id="transporteHoraSaida" type="text" class="mws-textinput hora">        					
+			    </div>
+			</div>
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>Data Chegada</label>
+			    <div class="mws-form-item large">
+					<input id="transporteDataChegada" type="text" class="mws-textinput data">        					
+			    </div>
+			</div>
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>Hora Chegada</label>
+			    <div class="mws-form-item large">
+					<input id="transporteHoraChegada" type="text" class="mws-textinput hora">        					
+			    </div>
+			</div>
+			
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>* Valor Individual</label>
+			    <div class="mws-form-item large">
+					<input id="valorTransporte" type="text" class="mws-textinput dinheiro">        					
+			    </div>
+			</div>	
+
+			<div class="mws-form-col-8-8 omega">
+        		<label>Histórico Viagem</label>
+        		<div class="mws-form-item large">
+        			<textarea cols="100%" id="historico_viagem"></textarea>					
+        		</div>				
+        	</div>			
+        						
+	    </div>
+		<div class="mws-button-row">
+            <input id="adicionarTransporte" type="button" class="mws-button green" value="Adicionar" style="display: none;" />
+            <input type="button" class="mws-button adicionarTransporte red" value="Combobox Empresa" style="display: none;" />
+            <input id="cadastroTransporte" type="button" class="mws-button orange" value="Novo" />
+		</div> 
+	</div>
+  
+    <div class="dataTables_wrapper">              	    
+        <table class="mws-datatable-fn mws-table">
+            <thead>
+                <tr>
+                    <th title="Nome">Nome</th>
+                    <th title="Origem">Origem</th> 
+                    <th title="Destino">Destino</th> 
+                    <th title="Data Saída">Data de Saída</th> 
+                    <th title="Hora Saída">Hora de Saída</th> 
+                    <th title="Data Chegada">Data de Chegada</th> 
+                    <th title="Hora Chegada">Hora de Chegada</th> 
+                    <th title="Valor">Valor (<span class="moeda"></span>)</th> 
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="transporteTbody"></tbody>
+        </table>
+          
+    </div>
+</div>

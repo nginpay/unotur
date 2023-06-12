@@ -1,0 +1,44 @@
+<?php if(count($this->midias) > 0): ?>
+<div class="mws-panel grid_8">
+	<div class="mws-panel-header">
+		<span class="mws-i-24 i-polaroids">Imagens da Galeria</span>
+	</div>
+	<div class="mws-panel-body">
+		<div class="mws-panel-content">
+			<ul id="mws-gallery" class="clearfix">
+<?php 
+foreach($this->midias as $midia):
+    //Verificando extensão do arquivo
+    $arquivo = getcwd().$midia["midia"];
+    $pathInfo = pathinfo($arquivo);
+    if($pathInfo["extension"] == "mp4"){
+        $imagem = (empty($midia["thumb"]))?$this->baseUrl("/images/default/media-200x200.png"):$this->baseUrl($midia["thumb"]);
+        $url = "javascript://";    
+    } else {
+        $imagem = $this->baseUrl($midia["midia"]);
+        $url = $this->baseUrl($midia["midia"]);        
+    }    
+?>			
+				<li>
+					<a title="<?php echo $midia["legenda"];?>" href="<?php echo $url;?>" rel="prettyPhoto[movies]">
+						<img src="<?php echo $imagem;?>" alt="">
+						<span class="mws-gallery-overlay">
+							<span class="mws-gallery-zoom"></span>
+						</span>
+					</a>
+					<div id="edicao">
+					    <a class="mws-ic-16 ic-edit editar-foto" rel="<?php echo $midia["codigo"];?>" href="javascript://">Editar</a>						
+						<a class="mws-ic-16 ic-cancel excluir-foto" data-codigo="<?php echo $midia["codigo"];?>" href="javascript://">Excluir</a>						
+						<a class="mws-ic-16 ic-application-put baixar" data-codigo="<?php echo $midia["codigo"];?>" href="<?php echo $this->url(array("controller"=>"cliente-documento", "action"=>"download", "codigo"=>"{$midia["codigo"]}"));?>">Baixar</a>						
+					</div>
+				</li>
+<?php 
+endforeach;
+?>
+			</ul>			
+			<!-- Paginação --> 
+        	<div id="paginacao"></div>  
+		</div>
+	</div>
+</div>
+<?php endif; ?>	

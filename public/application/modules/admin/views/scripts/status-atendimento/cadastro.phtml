@@ -1,0 +1,28 @@
+
+<div class="mws-panel grid_8">
+    <div class="mws-panel-header">
+        <span class="mws-i-24 i-pencil">Editor de Registro</span>
+    </div>
+    <div class="mws-panel-body">	    
+        <form action="<?php echo $this->url(array("controller" => $this->controllerName, "action" => "salvar-cadastro", "module" => "admin")); ?>" class="mws-form" id="formCadastro">		
+
+            <input id="codigo" type="hidden" name="codigo" value="<?php echo $this->registro["codigo"]; ?>" />
+            <div class="mws-form-inline">                                
+                <div class="mws-form-cols clearfix">				
+
+                    <div class="mws-form-col-4-8 alpha">
+                        <label>Titulo</label>
+                        <div class="mws-form-item large">
+                            <input value="<?php echo stripslashes($this->registro["nome"]); ?>" type="text" class="mws-textinput" name="nome" maxlength="100">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="mws-button-row">
+                <input type="submit" class="mws-button red" value="Enviar" />
+                <input id="voltar" type="reset" class="mws-button gray" value="Voltar" onclick="javascript:history.back(-1)" />
+            </div>	
+        </form>    	
+    </div>
+</div>	

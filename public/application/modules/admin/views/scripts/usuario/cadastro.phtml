@@ -1,0 +1,167 @@
+<div class="mws-panel grid_8">
+	<div class="mws-panel-header">
+	<span class="mws-i-24 i-pencil">Editor de Registro</span>
+	</div>
+	<div class="mws-panel-body">
+	<form action="<?php echo $this->url(array('controller'=>$this->controllerName, 'action'=>'salvar-cadastro', 'module'=>'admin'));?>" class="mws-form" id="formCadastro">								
+		<input type="hidden" id="cadastro-iframe" value="<?php echo $this->iframe; ?>" />
+		<input class="hidden" type="text" id="foto" name="foto" value="<?php echo $this->registro["foto"]?>" />
+		<div class="mws-form-inline">                                
+			<div class="mws-form-cols clearfix">			
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>* Usuário de Acesso</label>
+    			    <div class="mws-form-item large">
+<?php if(!empty($this->registro['usuario'])):?>
+    			        <input disabled="disabled" value='<?php echo stripslashes($this->registro["usuario"]); ?>' type="text" class="mws-textinput" name="usuario" maxlength="200">
+    			        <input value="<?php echo $this->registro['usuario']; ?>" type="hidden" name="usuarioedit" id="usuario" maxlength="200">
+<?php else: ?>  
+                        <input type="text" class="mws-textinput lowercase" name="usuario" maxlength="200">
+<?php endif; ?>
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>* Email</label>
+    			    <div class="mws-form-item large">
+    			        <input class="mws-textinput lowercase" type="text" name="email" maxlength='200' value="<?php echo $this->registro["email"]; ?>" />
+    			    </div>
+    			</div>
+    					
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>Senha</label>
+    			    <div class="mws-form-item large">
+    			        <input id="senha" class="mws-textinput nocase" type="password" name="senha" maxlength='200' value="" />
+    			    </div>
+    			</div>	
+    				
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>Confirmar Senha</label>
+    			    <div class="mws-form-item large">
+    			        <input class="mws-textinput nocase" type="password" name="confirmar-senha" maxlength='200' value="" />
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-2-8 alpha">
+    			    <label>* Nome</label>
+    			    <div class="mws-form-item large">    			        
+    			        <input class="mws-textinput" type="text" name="nome" maxlength='200' value="<?php echo $this->registro["nome"];?>" />
+    			    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-1-8 omega">
+					<label>Status</label>				
+					<div class="mws-form-item clearfix">
+						<ul class="mws-form-list inline">
+							<li><label><input <?php echo ($this->registro['status'] == 'ativo' || empty($this->registro['status']))?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="ativo" type="radio" name="status"> Ativo</label></li>
+							<li><label><input <?php echo ($this->registro['status'] == 'inativo')?'checked="checked"':""; ?> style="vertical-align: baseline;" value="inativo" type="radio" name="status"> Inativo</label></li>						
+						</ul>
+					</div>
+				</div>
+    												
+    			<div id="administrar" class="mws-form-col-1-8 omega">
+					<label>Administrador Geral</label>				
+					<div class="mws-form-item clearfix tipos">
+						<ul class="mws-form-list inline">
+							<li><label><input id="administrarTrue" <?php echo ($this->registro['administrador'] == true || empty($this->registro['administrador']))?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="1" type="radio" name="administrador"> Sim</label></li>
+							<li><label><input id="administrarFalse" <?php echo ($this->registro['administrador'] == false)?'checked="checked"':""; ?> style="vertical-align: baseline;" value="blank" type="radio" name="administrador"> Não</label></li>						
+						</ul>
+					</div>
+				</div>
+				
+				<div style="<?php echo ($this->registro['administrador'])?"display:none;":""; ?>" id="permissoes" class="mws-form-col-8-8 omega">
+    				<label>Permissões de Acesso</label>
+    				<div class="mws-form-item large">
+                    	<div class="mws-dualbox clearfix">
+                        	<div class="mws-dualbox-col1">
+                            	<div class="mws-dualbox-filter clearfix">
+                                    <label for="box1Filter">Permissões</label>
+                                    <input type="text" id="box1Filter" class="mws-textinput" />
+                                    <button type="button" id="box1Clear">X</button>
+                                </div>
+    
+                                <select id="box1View" size="15" class="multisorter indent" multiple="multiple">
+        							<?php 
+        							    foreach($this->resources as $resource):
+        							    $resourcePermissao = $resource->findDependentRowSet("Model_UsuarioPermissao",null,$resource->select()->where("usuario = '{$this->registro["usuario"]}'"));
+        							    $selected = (!empty($resourcePermissao["usuario"]))?'selected="selected"':''; 
+        							        if(!$selected): 
+        							?>
+        							<option value="<?php echo $resource["resource"]; ?>"><?php echo $resource["nome"]; ?></option>
+        							<?php 
+        							        endif;
+        							    endforeach; 
+        							?>							
+        						</select>
+                                <span id="box1Counter" class="countLabel"></span>
+                                <select id="box1Storage"></select>
+                            </div>
+                            <div class="mws-dualbox-col2">
+                                <button id="to2" type="button">&gt;</button>
+                                <button id="allTo2" type="button">&gt;&gt;</button>
+                                <div class="clear"></div>
+                                <button id="allTo1" type="button">&lt;&lt;</button>
+                                <button id="to1" type="button">&lt;</button>
+                            </div>
+                            <div class="mws-dualbox-col3">
+                                <div class="mws-dualbox-filter clearfix">
+                                    <label for="box2Filter">Permissões Concedidas</label>
+                                    <input type="text" id="box2Filter" class="mws-textinput" />
+                                    <button type="button" id="box2Clear">X</button>
+                                </div>
+    
+                                <select name="permissoes[]" id="box2View" multiple="multiple" size="15">
+                                    <?php 
+        							    foreach($this->resources as $resource):
+        							    $resourcePermissao = $resource->findDependentRowSet("Model_UsuarioPermissao",null,$resource->select()->where("usuario = '{$this->registro["usuario"]}'"));
+        							    $selected = (!empty($resourcePermissao["usuario"]))?'selected="selected"':'';
+        							        if($selected): 
+        							?>
+        							<option value="<?php echo $resource["resource"]; ?>"><?php echo $resource["nome"]; ?></option>
+        							<?php 
+        							        endif;
+        							    endforeach; 
+        							?>	    
+                                </select>
+                                <span id="box2Counter" class="countLabel"></span>
+                                <select id="box2Storage"></select>
+                            </div>
+                        </div>
+                    </div>
+    			</div>
+    			
+    			<div class="mws-form-col-8-8 omega">
+					<input id="uploader" type="button" class="mws-button orange mws-i-24 i-camera-2 large" value="Foto">
+					<span>(Tamanho 100x100)</span>
+					<div id="filelist"></div>
+					<br/>
+					<?php 
+					    $foto = (empty($this->registro["foto"]))?"http://dummyimage.com/100x100/d6d6d6/686a82.gif&text=Foto":$this->baseUrl($this->registro["foto"]);
+					?>
+					<a id="pretty" rel="prettyPhoto" href="<?php echo $foto;?>" title="">
+						<img width="100" id="imagem" src="<?php echo $foto;?>" />
+					</a>
+					<div id="edicao" style="<?php echo ($this->registro['foto'] != "/images/foto-default.jpg")?'display:block':'display:none'; ?>">																					
+						<a style="text-indent:10000px;margin-top:5px;<?php echo (!empty($this->registro['foto']))?'display:block':'display:none'; ?>" title="Excluir foto" class="mws-ic-16 ic-cancel excluir-foto" rel="<?php echo $this->registro["usuario"];?>" href="javascript://">Excluir</a>					
+					</div>						
+				</div>
+    					
+		    </div>
+	    </div>
+		<div class="mws-button-row">
+			<input type="submit" class="mws-button red" value="Enviar" />
+<?php 
+    if(!$this->iframe):
+?>    			
+			<input id="voltar" type="reset" class="mws-button gray" value="Voltar" onclick="javascript:history.back(-1)" />
+<?php 
+    else:
+?>
+            <input type="reset" class="mws-button gray" value="Fechar" onclick="window.parent.$('#dialog').dialog('close');" />
+<?php
+    endif; 
+?>
+		</div>
+	</form>
+			
+	</div>    	
+</div>

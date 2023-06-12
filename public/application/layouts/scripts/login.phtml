@@ -1,0 +1,26 @@
+<?php echo $this->doctype(); ?>
+<html>
+<head>
+<!-- BaseURL //-->
+<base
+	href="http://<?php echo $_SERVER['SERVER_NAME']. $this->baseUrl(); ?>/"
+	target="_parent" />
+<!-- Titulo //-->
+<?php echo $this->headTitle()->setSeparator(' / ')->setIndent("\t"); ?>
+<!-- Metatags //-->
+<?php echo $this->headMeta()->setIndent("\t"); ?>
+<!-- Estilos (CSS) //-->
+<?php echo $this->headLink()->setIndent("\t"); ?>
+<?php echo $this->headStyle()->setIndent("\t"); ?>
+<!-- Scripts (JS) //-->
+<?php echo $this->headScript()->setIndent("\t"); ?>
+	<script type="text/javascript">
+		var _baseUrl = "<?php echo $this->baseUrl(); ?>";
+		var _controller = "<?php echo $this->controllerName; ?>";
+		var _action = "<?php echo $this->actionName; ?>";
+	</script>
+</head>
+<body>
+	<?php echo $this->layout()->content; ?>
+</body>
+</html>

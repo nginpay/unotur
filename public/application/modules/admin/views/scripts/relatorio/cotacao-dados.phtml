@@ -1,0 +1,32 @@
+
+<!-- Paginação do crud -->
+<tr id="paginacao-temp" style="display: none;">
+	<td>
+		<?php echo $this->paginationControl($this->paginacao, "Sliding", "/partial/paginacao.phtml"); ?>
+	</td>
+</tr>
+
+<?php
+if(count($this->paginacao)>0):
+
+$aux = 0;
+foreach($this->paginacao as $dados):
+    $class = ($aux%2 == 0)?"even":"odd";
+    $moeda = $dados->findParentRow("Model_Moeda");    
+?>
+
+<tr class="gradeX <?php echo $class;?>">        
+    <td class="center"><?php echo (isset($moeda->nome))?$moeda->nome:null;?></td>
+    <td class="center"><?php echo $this->data($dados["data"]);?></td>
+    <td class="center"><?php echo $this->NumeroParaMoeda($dados["valor"]);?></td>    
+    <td class="center"><?php echo $dados["usuario"]; ?></td>        
+</tr>	
+
+<?php
+$aux++;
+endforeach;
+
+else :
+	echo '<tr class="gradeX even"> <td style="text-align:center;" class="center" colspan="4">Nenhum registro encontrado</td>';
+endif;
+?>

@@ -1,0 +1,108 @@
+
+<div class="mws-panel grid_8">
+	<div class="mws-panel-header">
+	    <span class="mws-i-24 i-pencil">Editor de Registro</span>
+	</div>
+	<div class="mws-panel-body">	    
+    	<form action="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"salvar-cadastro", "module"=>"admin"));?>" class="mws-form" id="formCadastro">		
+    		<input class="hidden" type="text" id="logomarca" name="logomarca" value="<?php echo $this->registro["logomarca"]?>" />		
+    		<input id="codigo" type="hidden" name="codigo" value="<?php echo $this->registro["codigo"]; ?>" />
+    		<div class="mws-form-inline">                                
+			    <div class="mws-form-cols clearfix">				
+    			    			
+        			<div class="mws-form-col-4-8 alpha">
+        			    <label>* Nome</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["nome"]); ?>" type="text" class="mws-textinput" name="nome" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-4-8 alpha">
+        			    <label>* Endereço</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["endereco"]); ?>" type="text" class="mws-textinput" name="endereco" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* CPF/CNPJ</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["cpf_cnpj"]); ?>" type="text" class="mws-textinput" name="cpf_cnpj" maxlength="100">
+        			    </div>
+        			</div>
+			
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Cidade</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["cidade"]); ?>" type="text" class="mws-textinput" name="cidade" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Estado</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["uf"]); ?>" type="text" class="mws-textinput" name="uf" maxlength="100">
+        			    </div>
+        			</div>
+										
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Carteira</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["carteira"]); ?>" type="text" class="mws-textinput" name="carteira" maxlength="100">
+        			    </div>
+        			</div>
+						
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Agência</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["agencia"]); ?>" type="text" class="mws-textinput" name="agencia" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Agência Dv</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["agencia_dv"]); ?>" type="text" class="mws-textinput" name="agencia_dv" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Conta</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["conta"]); ?>" type="text" class="mws-textinput" name="conta" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Conta Dv</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["conta_dv"]); ?>" type="text" class="mws-textinput" name="conta_dv" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-8-8 omega">
+    					<input id="uploader" type="button" class="mws-button orange mws-i-24 i-camera-2 large" value="Logomarca">
+    					<span>(Tamanho 240x63)</span>
+    					<div id="filelist"></div>
+    					<br/>
+    					<?php 
+    					    $logomarca = (empty($this->registro["logomarca"]))?"http://dummyimage.com/240x63/d6d6d6/686a82.gif&text=Logomarca":$this->baseUrl($this->registro["logomarca"]);
+    					?>
+    					<a id="pretty" rel="prettyPhoto" href="<?php echo $logomarca;?>" title="">
+    						<img width="100" id="imagem" src="<?php echo $logomarca;?>" />
+    					</a>
+    					<div id="edicao" style="<?php echo ($this->registro['logomarca'] != "/images/foto-default.jpg")?'display:block':'display:none'; ?>">																					
+    						<a style="text-indent:10000px;margin-top:5px;<?php echo (!empty($this->registro['logomarca']))?'display:block':'display:none'; ?>" title="Excluir logomarca" class="mws-ic-16 ic-cancel excluir-logomarca" rel="<?php echo $this->registro["codigo"];?>" href="javascript://">Excluir</a>					
+    					</div>						
+    				</div>
+						        		
+        	    </div>
+        	</div>
+        	<div class="mws-button-row">
+    			<input type="submit" class="mws-button red" value="Enviar" />
+    			<input id="voltar" type="reset" class="mws-button gray" value="Voltar" onclick="javascript:history.back(-1)" />
+    		</div>	
+    	</form>    	
+	</div>
+</div>	

@@ -1,0 +1,60 @@
+<div class="mws-panel-body">    
+    <div class="mws-form-inline">                                
+        <div class="mws-form-cols clearfix formPassagem" style="background: #E3E2E2; display: none;">
+            <input type="hidden" id="idAtendimentoPassagem" />
+                        
+            <div class="mws-form-col-2-8 alpha">
+                <label>* Origem</label>
+                <div class="mws-form-item large">
+                    <input id="passagemOrigem" type="text" class="mws-textinput">        					
+                </div>
+            </div>
+            <div class="mws-form-col-2-8">
+                <label>* Destino</label>
+                <div class="mws-form-item large">
+                    <input id="passagemDestino" type="text" class="mws-textinput">        					
+                </div>
+            </div>
+            <div class="mws-form-col-1-8">
+                <label>* Data</label>
+                <div class="mws-form-item large">
+                    <input id="passagemData" type="text" class="mws-textinput data">        					
+                </div>
+            </div>
+            <div class="mws-form-col-1-8">
+                <label>* Qtd Adultos</label>
+                <div class="mws-form-item large">
+                    <input id="passagemQtdAdulto" type="text" class="mws-textinput numero">        					
+                </div>
+            </div>
+            <div class="mws-form-col-1-8">
+                <label>Qtd Crianças</label>
+                <div class="mws-form-item large">
+                    <input id="passagemQtdCrianca" type="text" class="mws-textinput numero">        					
+                </div>
+            </div>
+            			
+        </div>
+        <div class="mws-button-row">
+            <input id="adicionarPassagem" type="button" class="mws-button green" value="Adicionar" style="display: none;" />            
+            <input id="cadastroPassagem" type="button" class="mws-button orange" value="Novo" />
+        </div> 
+    </div>
+
+    <div class="dataTables_wrapper">
+
+        <table class="mws-table">
+            <thead>
+                <tr>
+                    <th title="Origem">Origem</th>
+                    <th title="Destino">Destino</th>
+                    <th title="Data">Data</th>                    
+                    <th title="Adultos">Adultos</th>                                       
+                    <th title="Crianças">Crianças</th>                                       
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="passagemTbody"></tbody>
+        </table>           
+    </div>
+</div>

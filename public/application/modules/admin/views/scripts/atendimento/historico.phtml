@@ -1,0 +1,42 @@
+<div class="mws-panel-body">    
+    <div class="mws-form-inline">                                
+        <div class="mws-form-cols clearfix formHistorico" style="background: #E3E2E2; display: none;">
+            <input type="hidden" id="idAtendimentoHistorico" />
+            
+            <div class="mws-form-col-2-8">
+                <label>* Data Retorno</label>
+                <div class="mws-form-item large">
+                    <input id="historicoDataRetorno" type="text" class="mws-textinput data">        					
+                </div>
+            </div>
+            
+            <div class="mws-form-col-6-8">
+                <label>* Observacao</label>
+                <div class="mws-form-item large">
+                    <input id="historicoObservacao" type="text" class="mws-textinput">        					
+                </div>
+            </div>
+            			
+        </div>
+        <div class="mws-button-row">
+            <input id="adicionarHistorico" type="button" class="mws-button green" value="Adicionar" style="display: none;" />            
+            <input style="display: none;" id="cadastroHistorico" type="button" class="mws-button orange" value="Novo" />
+        </div> 
+    </div>
+
+    <div class="dataTables_wrapper">
+
+        <table class="mws-table">
+            <thead>
+                <tr>                    
+                    <th title="Atendente">Atendente</th>                    
+                    <th title="Observação">Observação</th>                                       
+                    <th title="Data Retorno">Data Retorno</th>                                       
+                    <th title="Data">Data Cadastro</th>                                       
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="historicoTbody"></tbody>
+        </table>           
+    </div>
+</div>

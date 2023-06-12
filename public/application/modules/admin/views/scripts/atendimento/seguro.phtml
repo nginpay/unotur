@@ -1,0 +1,48 @@
+<div class="mws-panel-body">    
+    <div class="mws-form-inline">                                
+        <div class="mws-form-cols clearfix formSeguro" style="background: #E3E2E2; display: none;">
+            <input type="hidden" id="idAtendimentoSeguro" />
+            
+            <div class="mws-form-col-2-8">
+                <label>* Data Início</label>
+                <div class="mws-form-item large">
+                    <input id="seguroDataInicio" type="text" class="mws-textinput data">        					
+                </div>
+            </div>
+            
+            <div class="mws-form-col-2-8">
+                <label>* Data Fim</label>
+                <div class="mws-form-item large">
+                    <input id="seguroDataFim" type="text" class="mws-textinput data">        					
+                </div>
+            </div>
+           
+            <div class="mws-form-col-4-8">
+                <label>* Descrição</label>
+                <div class="mws-form-item large">
+                    <input id="seguroDescricao" type="text" class="mws-textinput">        					
+                </div>
+            </div>
+            			
+        </div>
+        <div class="mws-button-row">
+            <input id="adicionarSeguro" type="button" class="mws-button green" value="Adicionar" style="display: none;" />            
+            <input id="cadastroSeguro" type="button" class="mws-button orange" value="Novo" />
+        </div> 
+    </div>
+
+    <div class="dataTables_wrapper">
+
+        <table class="mws-table">
+            <thead>
+                <tr>                    
+                    <th title="Data Início">Data Início</th>                    
+                    <th title="Data Fim">Data Fim</th>                                       
+                    <th title="Descrição">Descrição</th>                                       
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="seguroTbody"></tbody>
+        </table>           
+    </div>
+</div>

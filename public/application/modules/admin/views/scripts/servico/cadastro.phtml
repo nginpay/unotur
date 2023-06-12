@@ -1,0 +1,130 @@
+
+<div class="mws-panel grid_8">
+	<div class="mws-panel-header">
+	    <span class="mws-i-24 i-pencil">Editor de Registro</span>
+	</div>
+	<div class="mws-panel-body">	    
+    	<form action="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"salvar-cadastro", "module"=>"admin"));?>" class="mws-form" id="formCadastro">		
+    		<input type="hidden" id="cadastro-iframe" value="<?php echo $this->iframe; ?>" />		
+    		<input id="codigo" type="hidden" name="codigo" value="<?php echo $this->registro["codigo"]; ?>" />
+    		<div class="mws-form-inline">                                
+			    <div class="mws-form-cols clearfix">				
+    			    
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Nome</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["nome"]); ?>" type="text" class="mws-textinput" name="nome" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-4-8 omega">
+        			    <label>Site</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["site"]); ?>" type="text" class="mws-textinput" name="site">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-2-8 omega">
+        			    <label>Categoria</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["tipo"]); ?>" type="text" class="mws-textinput" name="tipo" maxlength="200">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-3-8 omega">
+        			    <label>Cidade</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["cidade"]); ?>" type="text" class="mws-textinput" name="cidade" maxlength="200">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-1-8 omega">
+        			    <label>Telefone</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["telefonefixo"]); ?>" type="text" class="mws-textinput telefone" name="telefonefixo" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-1-8 omega">
+        			    <label>Celular</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["celular"]); ?>" type="text" class="mws-textinput telefone" name="celular" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-1-8 omega">
+<?php 
+    $status = array("Ativo"=>"ativo", "Inativo"=>"inativo");
+?>        			
+        			    <label>Status</label>
+        			    <div class="mws-form-item large">
+            			    <select name="status">
+<?php 
+    foreach($status as $registro => $key):
+        $selected = ($key == $this->registro["status"])?'selected="selected"':"";
+?>            			    
+            			        <option <?php echo $selected; ?> value="<?php echo $key?>"><?php echo $registro; ?></option>
+<?php 
+    endforeach;
+?>            			        
+            			    </select>
+            			</div>
+            	    </div>
+        			
+        			<div class="mws-form-col-2-8 alpha">
+        				<label>Tipo de Pessoa</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo (empty($this->registro['tipopessoa']) || $this->registro['tipopessoa'] == "F")?'checked="checked"':""; ?> style="vertical-align: baseline;" value="F" type="radio" name="tipopessoa"> Física</label></li>						
+        						<li><label><input <?php echo ($this->registro['tipopessoa'] == "J")?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="J" type="radio" name="tipopessoa"> Jurídica</label></li>
+        					</ul>
+        				</div>
+        			</div>
+        			
+        			<?php 
+        			    $displayFisica = ($this->registro["tipopessoa"] == "F" || empty($this->registro["tipopessoa"]))?'style="display: block;"':'style="display: none;"';
+        			    $displayJuridico = ($this->registro["tipopessoa"] == "J")?'style="display: block;"':'style="display: none;"';
+        			?>
+        			
+        			<div <?php echo $displayFisica; ?> class="mws-form-col-1-8 alpha fisica">
+        			    <label>* Cpf</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["cpf"]); ?>" type="text" class="mws-textinput cpf" name="cpf" maxlength="20">
+        			    </div>
+        			</div>
+        			
+        			<div <?php echo $displayJuridico; ?> class="mws-form-col-2-8 alpha juridica">
+        			    <label>* Cnpj</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["cnpj"]); ?>" type="text" class="mws-textinput cnpj" name="cnpj" maxlength="20">
+        			    </div>
+        			</div>
+        			
+        			<div <?php echo $displayJuridico; ?> class="mws-form-col-2-8 alpha juridica">
+        			    <label>* Razão Social</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["razaosocial"]); ?>" type="text" class="mws-textinput" name="razaosocial" maxlength="200">
+        			    </div>
+        			</div>
+        			
+        			
+			        		
+        	    </div>
+        	</div>
+        	<div class="mws-button-row">
+    			<input type="submit" class="mws-button red" value="Enviar" />
+<?php 
+    if(!$this->iframe):
+?>    			
+    			<input id="voltar" type="reset" class="mws-button gray" value="Voltar" onclick="javascript:history.back(-1)" />
+<?php 
+    else:
+?>
+                <input type="reset" class="mws-button gray" value="Fechar" onclick="window.parent.$('#dialog').dialog('close');" />
+<?php
+    endif; 
+?>
+    		</div>	
+    	</form>    	
+	</div>
+</div>	

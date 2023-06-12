@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:zf="http://framework.zend.com/xml/zend-config-xml/1.0/">
+	<nav>
+		<seceg route="default">
+			<label>SECEG</label>
+			<module>default</module>
+			<controller>seceg</controller>
+			<action>index</action>			
+		</seceg>
+		<beneficios route="default">
+			<label>BENEFÍCIOS</label>
+			<module>default</module>
+			<controller>beneficios</controller>
+			<action>index</action>			
+		</beneficios>
+		<emissao>
+			<label>EMISSÃO DE GUIAS</label>
+			<uri>http://secegservicos.no-ip.org/guiasnew/guiasMenu.php</uri>		
+		</emissao>							
+		<noticias route="default">
+			<label>NOTÍCIAS</label>
+			<module>default</module>
+			<controller>noticias</controller>
+			<action>index</action>			
+		</noticias>														
+		<contato route="default" class="last">
+			<label>CONTATO</label>
+			<controller>contato</controller>
+			<action>index</action>						
+		</contato>
+		
+	</nav>
+</config>

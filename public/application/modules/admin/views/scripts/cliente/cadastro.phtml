@@ -1,0 +1,311 @@
+<div class="mws-panel grid_8">
+	<div class="mws-panel-header">
+	    <span class="mws-i-24 i-pencil">Editor de Cliente</span>
+	</div>
+	<div class="mws-panel-body">
+<?php 
+    if(!empty($this->registro["codigo"])):    
+?>                            
+	    <div class="mws-wizard clearfix">
+            <ul>
+                <li id="cadastro" class="current aba">
+                    <a href="javascript://" class="mws-ic-16 ic-pencil" title="Dados Cadastrais">Dados Cadastrais</a>
+                </li>                
+                <li id="documentos" class="aba">
+                    <a class="mws-ic-16 ic-page-2-copy" href="javascript://" title="Documentos">Documentos</a>
+                </li> 
+            </ul>
+        </div>	    
+<?php 
+    endif;
+?>                               
+    	<form action="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"salvar-cadastro", "module"=>"admin"));?>" class="mws-form" id="formCadastro">		
+    		<input type="hidden" id="cadastro-iframe" value="<?php echo $this->iframe; ?>" />		
+    		<input id="codigo" type="hidden" name="codigo" value="<?php echo $this->registro["codigo"]; ?>" />
+    		<div class="mws-form-inline">    		                                    
+			    <div class="mws-form-cols clearfix cadastro abaContent current">				
+    			    
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Nome Completo</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["nome"]); ?>" type="text" class="mws-textinput" name="nome" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Email</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["email"]); ?>" type="text" class="mws-textinput lowercase" name="email" maxlength="100">
+        			    </div>
+        			</div>
+					        			
+        			<div class="mws-form-col-2-8 alpha">
+        				<label>Líder do Pacote</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo ($this->registro['liderpacote'])?'checked="checked"':""; ?> style="vertical-align: baseline;" value="1" type="radio" name="liderpacote"> Sim</label></li>						
+        						<li><label><input <?php echo (empty($this->registro['liderpacote']))?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="0" type="radio" name="liderpacote"> Não</label></li>
+        					</ul>
+        				</div>
+        			</div>
+        			
+        			<div class="mws-form-col-2-8 alpha">
+        				<label>Tipo de Pessoa</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo (empty($this->registro['tipopessoa']) || $this->registro['tipopessoa'] == "F")?'checked="checked"':""; ?> style="vertical-align: baseline;" value="F" type="radio" name="tipopessoa"> Física</label></li>						
+        						<li><label><input <?php echo ($this->registro['tipopessoa'] == "J")?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="J" type="radio" name="tipopessoa"> Jurídica</label></li>
+        					</ul>
+        				</div>
+        			</div>
+        			
+        			<?php 
+        			    $displayFisica = ($this->registro["tipopessoa"] == "F" || empty($this->registro["tipopessoa"]))?'style="display: block;"':'style="display: none;"';
+        			    $displayJuridico = ($this->registro["tipopessoa"] == "J")?'style="display: block;"':'style="display: none;"';
+        			?>        			
+        			<div <?php echo $displayFisica; ?> class="mws-form-col-1-8 alpha fisica">
+        			    <label>* Cpf</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["cpf"]); ?>" type="text" class="mws-textinput cpf" name="cpf" maxlength="20">
+        			    </div>
+        			</div>
+        			
+        			<div <?php echo $displayJuridico; ?> class="mws-form-col-1-8 alpha juridica">
+        			    <label>* Cnpj</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["cnpj"]); ?>" type="text" class="mws-textinput cnpj" name="cnpj" maxlength="20">
+        			    </div>
+        			</div>
+        			
+        			<div <?php echo $displayJuridico; ?> class="mws-form-col-2-8 alpha juridica">
+        			    <label>* Razão Social</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["razaosocial"]); ?>" type="text" class="mws-textinput" name="razaosocial" maxlength="200">
+        			    </div>
+        			</div>
+        				        
+			        <div class="mws-form-col-1-8 alpha">
+        			    <label>Cep</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["cep"]); ?>" type="text" class="mws-textinput cep" name="cep" maxlength="100">
+        			    </div>
+        			</div>
+        			        			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Endereco</label>
+        			    <div class="mws-form-item large">
+        					<input id="endereco" value="<?php echo stripslashes($this->registro["endereco"]); ?>" type="text" class="mws-textinput" name="endereco" maxlength="100">
+        			    </div>
+        			</div>
+        			        				
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>* Bairro</label>
+        			    <div class="mws-form-item large">
+        					<input id="bairro" value="<?php echo stripslashes($this->registro["bairro"]); ?>" type="text" class="mws-textinput" name="bairro" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>Estado</label>
+        			    <div class="mws-form-item large">
+            			    <select id="estado" data-cidade="<?php echo $this->registro["cidade"]?>" class="full_width">								
+    							<?php 
+    								foreach($this->estados as $estado):
+        								if(!empty($this->registro["cidade"])){
+        								    $cidade = $this->registro->findParentRow("Model_Cidade");
+        								}
+        								if($cidade->estado == $estado["codigo"]){
+        								    $selected = "selected='selected'";
+        								} elseif(empty($this->registro["codigo"]) && $estado["codigo"] == 10){
+        								    $selected = "selected='selected'";
+        								} else {
+        								    $selected = "";
+        								}
+    								
+    							?>
+    								<option <?php echo $selected; ?> value="<?php echo $estado["sigla"]; ?>"><?php echo $estado["sigla"]; ?></option>
+    							<?php endforeach;?>						
+    						</select>
+						</div>
+					</div>						
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Cidade</label>
+        			    <div class="mws-form-item large">
+        					<select id="cidade" name="cidade" class="full_width cidade"></select>
+        			    </div>
+        			</div>
+								
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>Rg</label>
+        			    <div class="mws-form-item large">
+        					<input id="rg" value="<?php echo stripslashes($this->registro["rg"]); ?>" type="text" class="mws-textinput" name="rg" maxlength="100">
+        			    </div>
+        			</div>
+			
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>* Data Nascimento</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo (!empty($this->registro["datanascimento"]))?$this->data($this->registro["datanascimento"]):""; ?>" type="text" class="mws-textinput data" name="datanascimento">
+        			    </div>
+        			</div>
+				    			
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>Telefone Fixo</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["telefonefixo"]); ?>" type="text" class="mws-textinput telefone" name="telefonefixo" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>Celular</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["celular"]); ?>" type="text" class="mws-textinput telefone" name="celular" maxlength="100">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-2-8 alpha">
+        				<label>* Sexo</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo ($this->registro['sexo'] == 'Masculino' || empty($this->registro['sexo']))?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="Masculino" type="radio" name="sexo"> Masculino</label></li>
+        						<li><label><input <?php echo ($this->registro['sexo'] == 'Feminino')?'checked="checked"':""; ?> style="vertical-align: baseline;" value="Feminino" type="radio" name="sexo"> Feminino</label></li>						
+        					</ul>
+        				</div>
+        			</div>
+        			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Usuário de Acesso</label>
+        			    <div class="mws-form-item large">
+<?php if(!empty($this->registro['usuario'])):?>
+        			        <input disabled="disabled" value='<?php echo stripslashes($this->registro["usuario"]); ?>' type="text" class="mws-textinput" name="usuario" maxlength="200">
+        			        <input value="<?php echo $this->registro['usuario']; ?>" type="hidden" name="usuarioedit" id="usuario" maxlength="200">
+<?php else: ?>  
+                            <input type="text" class="mws-textinput lowercase" name="usuario" maxlength="200">
+<?php endif; ?>
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>Senha</label>
+        			    <div class="mws-form-item large">
+        			        <input id="senha" class="mws-textinput nocase" type="password" name="senha" maxlength='200' value="" />
+        			    </div>
+        			</div>	
+    				
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>Confirmar Senha</label>
+        			    <div class="mws-form-item large">
+        			        <input class="mws-textinput nocase" type="password" name="confirmar-senha" maxlength='200' value="" />
+        			    </div>
+        			</div>
+			        	
+        			<div class="mws-form-col-2-8 alpha">
+<?php 
+    $status = array("Ativo"=>"ativo", "Inativo"=>"inativo", "Pendente"=>"pendente");
+?>        			
+        			    <label>Status</label>
+        			    <div class="mws-form-item large">
+            			    <select name="status">
+<?php 
+    foreach($status as $registro => $key):
+        $selected = ($key == $this->registro["status"])?'selected="selected"':"";
+?>            			    
+            			        <option <?php echo $selected; ?> value="<?php echo $key?>"><?php echo $registro; ?></option>
+<?php 
+    endforeach;
+?>            			        
+            			    </select>
+            			</div>
+            	    </div>
+            	    
+            	    <div class="mws-form-col-2-8 alpha">
+        				<label>Contrato</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo ($this->registro['contrato'])?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="1" type="radio" name="contrato"> Sim</label></li>
+        						<li><label><input <?php echo (!$this->registro['contrato'] || empty($this->registro['contrato']))?'checked="checked"':""; ?> style="vertical-align: baseline;" value="0" type="radio" name="contrato"> Não</label></li>						
+        					</ul>
+        				</div>
+        			</div>
+        			
+            	    <div class="mws-form-col-2-8 alpha">
+        				<label>Autorizou Débito</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo ($this->registro['autorizoudebito'])?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="1" type="radio" name="autorizoudebito"> Sim</label></li>
+        						<li><label><input <?php echo (!$this->registro['autorizoudebito'] || empty($this->registro['autorizoudebito']))?'checked="checked"':""; ?> style="vertical-align: baseline;" value="0" type="radio" name="autorizoudebito"> Não</label></li>						
+        					</ul>
+        				</div>
+        			</div>
+        			
+            	    <div class="mws-form-col-2-8 alpha">
+        				<label>Cópia do Cartão de Crédito</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo ($this->registro['copiacartaocredito'])?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="1" type="radio" name="copiacartaocredito"> Sim</label></li>
+        						<li><label><input <?php echo (!$this->registro['copiacartaocredito'] || empty($this->registro['copiacartaocredito']))?'checked="checked"':""; ?> style="vertical-align: baseline;" value="0" type="radio" name="copiacartaocredito"> Não</label></li>						
+        					</ul>
+        				</div>
+        			</div>
+					  			
+        			<div class="mws-form-col-8-8 omega">
+        				<label>Observações</label>
+        				<div class="mws-form-item large">
+        					<textarea cols="100%" rows="100%" name="observacoes"><?php echo stripslashes($this->registro["observacoes"]); ?></textarea>					
+        				</div>				
+        			</div>
+						        		
+        	    </div> 
+        	            	    
+        	    <div class="documentos abaContent">
+        	        <?php
+        	            $midias = array();
+        	            if(!empty($this->registro["codigo"])):
+        	                $midias = $this->registro->findDependentRowSet("Model_ClienteMidia",null,$this->registro->select()->order("codigo DESC"));
+        	                echo $this->partial("/cliente/documentos.phtml", array("midias"=>$midias)); 
+        	            endif; 
+                    ?>
+        	    </div>
+        	           	    
+        	</div>
+        	<div class="mws-button-row">
+    			<input type="submit" class="mws-button red" value="Enviar" />
+<?php 
+    if(!$this->iframe):
+?>    			
+    			<input id="voltar" type="reset" class="mws-button gray" value="Voltar" onclick="location.href='<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"index", "module"=>"admin"),null,true);?>'" />
+<?php 
+    else:
+?>
+                <input type="reset" class="mws-button gray" value="Fechar" onclick="window.parent.$('#dialog').dialog('close');" />
+<?php
+    endif; 
+?>
+    		</div>	
+    	</form>    	
+	</div>
+</div>
+
+
+<div style="display: none;" id="dialog-form" title="Editar Foto">
+	<div class="mws-panel-body">
+		<form action="javascript://" class="mws-form" id="formFoto">
+		    <input name="codigo" type="hidden" />			
+			<div class="mws-form-block">                                
+				<div class="mws-form-row">
+					<label>Legenda</label>
+					<div class="mws-form-item large">
+						<input name="legenda" maxlength="200" type="text" class="mws-textinput">
+					</div>
+				</div>			
+				<div class="mws-form-row">
+					<label>Ordem</label>
+					<div class="mws-form-item large">
+						<input name="ordem" maxlength="3" type="text" class="mws-textinput numero">
+					</div>
+				</div>			
+		    </div>		    
+		</form>
+	</div>
+</div>

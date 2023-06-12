@@ -1,0 +1,46 @@
+
+<!-- Paginação do crud -->
+<tr id="paginacao-temp" style="display: none;">
+	<td>
+		<?php echo $this->paginationControl($this->paginacao, "Sliding", "/partial/paginacao.phtml"); ?>
+	</td>
+</tr>
+
+<?php
+if(count($this->paginacao)>0):
+
+$aux = 1;
+foreach($this->paginacao as $dados):
+    $class = ($aux%2 == 0)?"even":"odd";
+    $passageiro = $dados->findParentRow("Model_Passageiro");       
+    $venda = $dados->findParentRow("Model_Venda");
+    $contratante = $venda->findParentRow("Model_Cliente");
+    $vendaProduto = $venda->findDependentRowSet("Model_VendaProduto", null, $venda->select()->where("pacote IS NOT NULL"))->current();
+   
+    if(isset($vendaProduto->pacote)):
+        $pacote = $vendaProduto->findParentRow("Model_Pacote");
+        $lider = $pacote->findParentRow("Model_Cliente");
+    endif;
+?>
+
+<tr class="gradeX <?php echo $class;?>"> 
+    <td><?php echo $aux; ?></td>   
+    <td class="center"><?php echo $passageiro->nome." ".$passageiro->sobrenome; ?></td>      
+    <td class="center"><?php echo $this->data($passageiro->datanascimento); ?></td>      
+    <td class="center"><?php echo $passageiro->passaporte; ?></td>      
+    <td class="center"><?php echo $this->data($passageiro->emissaopassaporte); ?></td>      
+    <td class="center"><?php echo $passageiro->emissorpassaporte; ?></td>      
+    <td class="center"><?php echo $this->data($passageiro->vencimentopassaporte); ?></td>
+    <td class="center"><?php echo $contratante->nome; ?></td>       
+    <td class="center"><?php echo isset($pacote->descricao)?$pacote->descricao:null; ?></td>       
+    <td class="center"><?php echo isset($lider->nome)?$lider->nome:null; ?></td>       
+</tr>	
+
+<?php
+$aux++;
+endforeach;
+
+else :
+	echo '<tr class="gradeX even"> <td style="text-align:center;" class="center" colspan="10">Nenhum registro encontrado</td>';
+endif;
+?>

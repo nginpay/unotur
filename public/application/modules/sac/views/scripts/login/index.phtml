@@ -1,0 +1,34 @@
+<div id="retorno" class="mws-form-message warning">		
+</div>
+<div id="mws-login-bg">
+	<div id="mws-login-wrapper">
+		<div id="mws-login">
+			<h1>Login de Cliente</h1>
+			<div class="mws-login-lock">
+				<img src="<?php echo $this->baseUrl('css/admin/icons/24/locked-2.png');?>" alt="" />
+			</div>
+			<div id="mws-login-form">
+				<form id="formLogin" class="mws-form" action="<?php echo $this->url(array('action'=>'logar', 'controller'=>'login', 'module'=>'sac'),null,true);?>" method="post">
+					<div class="mws-form-row">
+						<div class="mws-form-item large">
+							<input value="<?php echo (!empty($this->login))?$this->login:""; ?>" type="text" name="usuario" class="mws-login-username mws-textinput required lowercase" placeholder="usuário" />
+						</div>
+					</div>
+					<div class="mws-form-row">
+						<div class="mws-form-item large">
+							<input type="password" name="senha" class="mws-login-password mws-textinput required" placeholder="senha" />
+						</div>
+					</div>
+					<div class="mws-form-row mws-inset">
+						<ul class="mws-form-list inline">
+							<li><label><input <?php echo (!empty($this->login))?'checked="checked"':""; ?> type="checkbox" name="gravar" /> Gravar usuário</label></li>
+						</ul>
+					</div>
+					<div class="mws-form-row">
+						<input type="submit" value="Login" class="mws-button green mws-login-button" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,88 @@
+<div class="mws-panel-body">    
+    <div class="mws-form-inline">                                
+	    <div class="mws-form-cols clearfix formHospedagem" style="background: #E3E2E2; display: none;">
+	        <input type="hidden" id="idPacoteHospedagem" />
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>País</label>
+			    <div class="mws-form-item large">
+					<select id="pais" class="full_width">
+					    <?php 
+if(count($this->paises) > 0):    
+	foreach($this->paises as $pais):				
+?>                        
+    			<option value="<?php echo $pais["iso"];?>">
+    				<?php echo $pais["nome"];?>
+    			</option>
+<?php		
+	endforeach;
+endif;
+?>
+					</select>
+			    </div>
+			</div>
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>Hospedaria</label>
+			    <div class="mws-form-item large">
+					<select id="hospedagem" class="full_width chzn-select">
+					    <option>Selecione um hospedagem</option>   
+					</select>
+			    </div>
+			</div>
+	        			
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>Data Chegada</label>
+			    <div class="mws-form-item large">
+					<input id="hospedagemDataChegada" type="text" class="mws-textinput data">        					
+			    </div>
+			</div>
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>Hora Chegada</label>
+			    <div class="mws-form-item large">
+					<input id="hospedagemHoraChegada" type="text" class="mws-textinput hora">        					
+			    </div>
+			</div>
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>Data Saída</label>
+			    <div class="mws-form-item large">
+					<input id="hospedagemDataSaida" type="text" class="mws-textinput data">        					
+			    </div>
+			</div>
+	        <div class="mws-form-col-1-8 alpha">
+			    <label>Hora Saída</label>
+			    <div class="mws-form-item large">
+					<input id="hospedagemHoraSaida" type="text" class="mws-textinput hora">        					
+			    </div>
+			</div>
+			
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>* Valor Individual</label>
+			    <div class="mws-form-item large">
+					<input id="valorHospedagem" type="text" class="mws-textinput dinheiro">        					
+			    </div>
+			</div>			
+	    </div>
+		<div class="mws-button-row">
+            <input id="adicionarHospedagem" type="button" class="mws-button green" value="Adicionar" style="display: none;" />
+            <input type="button" class="mws-button red adicionarHospedagem" value="Combobox Hospedaria" style="display: none;" />
+            <input id="cadastroHospedagem" type="button" class="mws-button orange" value="Novo" />
+		</div> 
+	</div>
+
+    <div class="dataTables_wrapper">
+       
+        <table class="mws-table">
+            <thead>
+                <tr>
+                    <th title="Nome">Nome</th>
+                    <th title="Data Chegada">Data de Chegada</th>
+                    <th title="Hora Chegada">Hora de Chegada</th>
+                    <th title="Data de Saída">Data de Saída</th>
+                    <th title="Hora de Saída">Hora de Saída</th>
+                    <th title="Valor">Valor (<span class="moeda"></span>)</th> 
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="hospedagemTbody"></tbody>
+        </table>           
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="mws-panel-body">
+    
+    <div class="mws-form-inline">                                
+	    <div class="mws-form-cols clearfix formServico" style="background: #E3E2E2; display: none;">
+	        <input type="hidden" id="idPacoteServico" />
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>Servico</label>
+			    <div class="mws-form-item large">
+					<select id="servico" class="full_width">
+<?php 
+if(count($this->servicos) > 0):    
+	foreach($this->servicos as $servico):				
+?>                        
+    			<option value="<?php echo $servico["codigo"];?>">
+    				<?php echo $servico["nome"];?>
+    			</option>
+<?php		
+	endforeach;
+endif;
+?>		
+					</select>
+			    </div>
+			</div>
+				       			
+	        <div class="mws-form-col-2-8 alpha">
+			    <label>* Valor Individual</label>
+			    <div class="mws-form-item large">
+					<input id="valorServico" type="text" class="mws-textinput dinheiro">        					
+			    </div>
+			</div>			
+	    </div>
+		<div class="mws-button-row">
+            <input id="adicionarServico" type="button" class="mws-button green" value="Adicionar" style="display: none;" />
+            <input type="button" class="mws-button adicionarServico red" value="Combobox Serviço" style="display: none;" />
+            <input id="cadastroServico" type="button" class="mws-button orange" value="Novo" />
+		</div> 
+	</div>
+
+    <div class="dataTables_wrapper">
+       
+        <table class="mws-table">
+            <thead>
+                <tr>
+                    <th title="Nome">Nome</th>
+                    <th title="Valor">Valor (<span class="moeda"></span>)</th> 
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="servicoTbody"></tbody>
+        </table>
+                 
+    </div>
+</div>

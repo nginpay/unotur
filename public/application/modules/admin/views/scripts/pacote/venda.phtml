@@ -1,0 +1,87 @@
+<div class="mws-panel-body">
+<div class="mws-panel-toolbar top clearfix">
+<?php if(count($this->produtos) > 0): ?>
+	<ul>						
+		<li><a class="mws-ic-16 ic-page-excel relatorioVenda" href="javascript://" title="Exportar registros">Exportar</a></li>										
+    </ul>
+<?php endif; ?>    
+</div>
+    <div class="dataTables_wrapper">        
+        <table class="mws-table">
+            <thead>
+                <tr>
+                    <th title="Cliente">Cliente</th>
+                    <th title="Data de Nascimento">Data de Nascimento</th>
+                    <th title="Data da Venda">Data da Venda</th> 
+                    <th title="Passaporte">Passaporte</th> 
+                    <th title="Data de emissão do passaporte">Emissão Passaporte</th> 
+                    <th title="Emissor do Passaporte">Orgão Emissor</th> 
+                    <th title="Vencimento do Passaporte">Vencimento Passaporte</th> 
+                    <th title="Total a Pagar">Total a Pagar</th>                      
+                    <th title="Valor Pago">Total Recebido</th>                      
+                    <th title="Saldo">Saldo Devedor</th>                      
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="vendaTbody">
+<?php 
+    if(count($this->produtos)>0):
+        $aux = 0;
+        $totalizadorApagar = 0;
+        $totalizadorAreceber = 0;
+        $totalizadorSaldo = 0;
+        foreach($this->produtos as $produto):                        
+            $class = ($aux%2 == 0)?"even":"odd";            
+            $venda = $produto->findParentRow("Model_Venda");
+            $cliente = $venda->findParentRow("Model_Cliente");            
+            $valorTotal = $venda->valortotal;
+            $totalRecebido = $this->totalVendaRecebido($venda->codigo);
+            $saldo = $venda->valortotal - $totalRecebido;
+             
+
+            $totalizadorApagar+= $valorTotal;
+            $totalizadorAreceber+= $totalRecebido;
+            $totalizadorSaldo+= $saldo;
+             
+?>
+                <tr class="gradeX <?php echo $class; ?> elem">
+                    <td><?php echo $cliente->nome; ?></td>
+                    <td><?php echo $this->data($cliente->datanascimento); ?></td>
+                    <td><?php echo $this->data($venda->datavenda); ?></td>
+                    <td><?php echo $venda->passaporte; ?></td>
+                    <td><?php echo $this->data($venda->emissaopassaporte); ?></td>
+                    <td><?php echo $venda->emissorpassaporte; ?></td>
+                    <td><?php echo $this->data($venda->vencimentopassaporte); ?></td>
+                    <td><?php echo $this->NumeroParaMoeda($valorTotal); ?></td>
+                    <td><?php echo $this->NumeroParaMoeda($totalRecebido); ?></td>
+                    <td><?php echo $this->NumeroParaMoeda($saldo); ?></td>
+                    <td>                		
+                		<a data-venda="<?php echo $venda->codigo; ?>" class="mws-ic-16 ic-magnifier viewVenda" title="Detalhes">&nbsp;</a>		
+                    </td>
+                </tr>
+<?php 
+            $aux++;
+        endforeach;
+?>
+                <tr class="gradeX <?php echo $class; ?> elem">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><strong><?php echo $this->NumeroParaMoeda($totalizadorApagar); ?></strong></td>
+                    <td><strong><?php echo $this->NumeroParaMoeda($totalizadorAreceber); ?></strong></td>
+                    <td><strong><?php echo $this->NumeroParaMoeda($totalizadorSaldo); ?></strong></td>                    
+                    <td></td>                    
+                </tr>
+<?php
+    else:
+        echo '<tr class="gradeX even zero"><td colspan="10" style="text-align:center;">Nenhuma venda registrada para este pacote até o momento</td></tr>';
+    endif;
+?>                      
+            </tbody>
+        </table>                
+    </div>
+</div>

@@ -1,0 +1,25 @@
+@font-face {    		
+	font-family: 'CandaraRegular';
+  	src: url('../default/fonts/Candara/candara.eot');
+  	src: url('../default/fonts/Candara/candara.eot') format('embedded-opentype'),
+         url('../default/fonts/Candara/candara.woff') format('woff'),
+         url('../default/fonts/Candara/candara.ttf') format('truetype'),
+         url('../default/fonts/Candara/candara.svg#CandaraRegular') format('svg');
+}
+
+body, html{	
+	font-family: 'CandaraRegular', Tahoma, Helvetica, sans-serif;
+	font-size: 17px;	
+	line-height: 25px;
+	text-align: justify;	
+}
+
+a{
+	color: #FFB400;
+	text-decoration: none;
+}
+
+ul{
+	padding: 10px;
+	margin: 0;
+}

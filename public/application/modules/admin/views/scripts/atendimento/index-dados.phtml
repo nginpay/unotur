@@ -1,0 +1,45 @@
+
+<!-- Paginação do crud -->
+<tr id="paginacao-temp" style="display: none;">
+	<td>
+		<?php echo $this->paginationControl($this->paginacao, "Sliding", "/partial/paginacao.phtml"); ?>
+	</td>
+</tr>
+
+<?php
+if(count($this->paginacao)>0):
+
+$aux = 0;
+foreach($this->paginacao as $dados):
+    $class = ($aux%2 == 0)?"even":"odd"; 
+	$status = $dados->findParentRow("Model_StatusAtendimento");
+	$cliente = $dados->findParentRow("Model_Cliente");
+		
+	$background = "#fafafa";
+    $hoje = date("Y-m-d 00:00:00");
+    
+    if($hoje == $dados["dataretorno"]){    	
+    	$background = "#FBDE93";
+    }
+?>
+
+<tr style="background: <?php echo $background; ?> !important;" class="gradeX <?php echo $class;?>">
+    <td width="20"><input class="checkCodigo" name="codigo[]" value="<?php echo $dados["codigo"];?>" type="checkbox"></td>                
+    <td class="center"><?php echo stripslashes($cliente->nome);?></td>        
+    <td class="center"><?php echo $this->data($dados["dataatendimento"],"comHorario");?></td>
+    <td class="center"><?php echo $this->data($dados["dataretorno"]);?></td>
+    <td class="center"><?php echo stripslashes($status->nome);?></td>    
+    <td>
+		<a class="mws-ic-16 ic-edit edit" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"cadastro", "module"=>"admin", "codigo"=>$dados["codigo"]),null,true);?>" title="Visualizar">&nbsp;</a>
+        <a style="display:none;" class="mws-ic-16 ic-cross delete deleteRow" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"excluir", "module"=>"admin"));?>" title="Excluir">&nbsp;</a>		
+    </td>
+</tr>	
+
+<?php
+$aux++;
+endforeach;
+
+else :
+	echo '<tr class="gradeX even"> <td style="text-align:center;" class="center" colspan="10">Nenhum registro encontrado</td>';
+endif;
+?>

@@ -1,0 +1,45 @@
+
+<!-- Paginação do crud -->
+<tr id="paginacao-temp" style="display: none;">
+	<td>
+		<?php echo $this->paginationControl($this->paginacao, "Sliding", "/partial/paginacao.phtml"); ?>
+	</td>
+</tr>
+
+<?php
+if(count($this->paginacao)>0):
+
+$aux = 0;
+foreach($this->paginacao as $dados):
+    $class = ($aux%2 == 0)?"even":"odd";
+    $lider = $dados->findParentRow("Model_Cliente");
+    $venda = $dados->findDependentRowSet("Model_VendaProduto");
+    $qtdVendida = count($venda);
+?>
+
+<tr class="gradeX <?php echo $class;?>">    
+    <td class="center"><?php echo $dados["codigo"];?></td>
+    <td class="center"><?php echo $dados["descricao"];?></td>
+    <td class="center"><?php echo $this->data($dados["datasaida"]);?></td>
+    <td class="center"><?php echo (isset($lider->nome))?$lider->nome:null;?></td>
+    <td class="center"><?php echo $this->NumeroParaMoeda($dados["valorvendaindividual"]);?></td>    
+    <td class="center"><?php echo $dados["qtdparticipantes"]; ?></td>
+    <td class="center"><?php echo $dados["qtdparticipantes"] - $qtdVendida;?></td>
+    <td class="center"><?php echo nl2br($dados["observacoes"]); ?></td>
+    <td class="center">
+<?php if(!empty($dados["roteiro"])): ?>
+        <a href="<?php echo $dados["roteiro"]; ?>" target="blank"><input type="button" class="mws-button orange small" value="Roteiro"></a>
+<?php else: ?>
+        <input type="button" class="mws-button red small" value="Sem roteiro">
+<?php endif; ?>
+    </td>
+</tr>	
+
+<?php
+$aux++;
+endforeach;
+
+else :
+	echo '<tr class="gradeX even"> <td style="text-align:center;" class="center" colspan="7">Nenhum registro encontrado</td>';
+endif;
+?>

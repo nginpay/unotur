@@ -1,0 +1,188 @@
+<div class="mws-panel grid_8">
+    <div class="mws-panel-header">
+        <span class="mws-i-24 i-pencil">Editor de Atendimento</span>
+    </div>
+    <div class="mws-panel-body">
+        
+        <?php 
+    if(!empty($this->registro["codigo"])):    
+?> 	    
+	    <div class="mws-wizard clearfix">
+            <ul>
+                <li id="cadastro" class="current aba">
+                    <a href="javascript://" class="mws-ic-16 ic-pencil" title="Dados Cadastrais">Novo Atendimento</a>
+                </li>               
+                 <li id="pacote" class="aba">
+                    <a class="mws-ic-16 ic-page-white-paste" href="javascript://" title="Pacote">Pacote</a>
+                </li> 
+                <li id="hospedagem" class="aba">
+                    <a class="mws-ic-16 ic-house" href="javascript://" title="Hospedagem">Hospedagem</a>
+                </li>                                                                                                
+                <li id="passagem" class="aba">
+                    <a class="mws-ic-16 ic-arrow-branch" href="javascript://" title="Passagem">Passagem</a>
+                </li>                                         
+                <li id="seguro" class="aba">
+                    <a class="mws-ic-16 ic-lock" href="javascript://" title="Seguro">Seguro</a>
+                </li>                                         
+                <li id="historico" class="aba">
+                    <a class="mws-ic-16 ic-data" href="javascript://" title="Histórico">Histórico</a>
+                </li>                                         
+            </ul>
+        </div>
+<?php 
+    endif;
+?> 
+        
+        <form action="<?php echo $this->url(array("controller" => $this->controllerName, "action" => "salvar-cadastro", "module" => "admin")); ?>" class="mws-form" id="formCadastro">
+            <input type="hidden" id="cadastro-iframe" value="<?php echo $this->iframe; ?>" />		    				
+            <input id="codigo" type="hidden" name="codigo" value="<?php echo $this->registro["codigo"]; ?>" />
+            <div class="mws-form-inline">                                
+                <div class="cadastro mws-form-cols clearfix abaContent current">
+                    <div class="mws-form-col-2-8 alpha">				    
+                        <label>* Tipo de Atendimento</label> 				    					    
+                        <div class="mws-form-item large">				    	
+                            <select name="statusatendimento" class="chosen-sd">
+                                <option value="">Selecione</option>	
+                                <?php
+                                if (count($this->status) > 0):
+                                    $selected = '';
+                                    foreach ($this->status as $status):
+                                        $selected = ($this->registro["statusatendimento"] == $status["codigo"]) ? "selected='selected'" : "";
+                                        ?>                        
+                                        <option <?php echo $selected; ?> value="<?php echo $status["codigo"]; ?>">
+                                            <?php echo $status["nome"]; ?>
+                                        </option>
+                                        <?php
+                                    endforeach;
+                                endif;
+                                ?>													
+                            </select>        											
+                        </div>
+                    </div>
+
+                    <div id="conta" style="display: none;">			            			
+                        <div class="mws-form-col-1-8 alpha">
+                            <label>* Conta a receber</label>
+                            <div class="mws-form-item large">
+                                <input value="<?php echo $this->registro["venda_areceber"]; ?>" maxlength="3" type="text" class="mws-textinput numero" name="venda_areceber">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mws-form-col-3-8 alpha">				    
+                        <label>* Cliente</label> 				    					    
+                        <div class="mws-form-item large">
+                            <?php 
+                                //$disabled = (!empty($this->registro["codigo"]))?'disabled="disabled"':null;
+                            	$disabled = null;                                
+                            ?>
+                                    <select id="cliente" class="chosen-cliente" name="cliente" <?php echo $disabled; ?>>
+                                            <option value="">Selecione o cliente</option>	
+<?php 
+if(count($this->clientes) > 0):
+$selected = '';
+    foreach($this->clientes as $cliente):	
+            $selected = ($this->registro["cliente"] == $cliente["codigo"])?"selected='selected'":"";
+            $cpfCnpj = ($cliente["tipopessoa"] == "F")?" CPF - ".$cliente["cpf"]:" CNPJ - ".$cliente["cnpj"];	
+?>                        
+                                                    <option <?php echo $selected; ?> value="<?php echo $cliente["codigo"];?>">
+                                                            <?php echo $cliente["nome"].$cpfCnpj;?>
+                                                    </option>
+<?php		
+    endforeach;
+endif;
+?>													
+                                    </select>                                           						
+                                </div>
+                            </div>
+
+                    <div class="mws-form-col-2-8 omega">
+                        <label>* Data para Retorno</label>
+                        <div class="mws-form-item large">
+                            <input value="" type="text" class="mws-textinput data" name="dataretorno">
+                        </div>
+                    </div>
+
+                    <div class="mws-form-col-2-8">
+                        <label>* Telefone</label>
+                        <div class="mws-form-item large">
+                            <input value="<?php echo stripslashes($this->registro["telefone"]); ?>" type="text" class="mws-textinput telefone" name="telefone" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="mws-form-col-2-8">
+                        <label>Whatsapp</label>
+                        <div class="mws-form-item large">
+                            <input value="<?php echo stripslashes($this->registro["whatsapp"]); ?>" type="text" class="mws-textinput telefone" name="whatsapp" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="mws-form-col-8-8 omega">
+                        <label>* Observação</label>
+                        <div class="mws-form-item large">
+                            <textarea cols="100%" rows="10" id="texto" name="observacoes"></textarea>					
+                        </div>				
+                    </div>
+
+                </div>
+                
+<?php if(!empty($this->registro["codigo"])): ?>        	
+                
+                <div class="pacote abaContent">
+                    <?php                        
+                        if(!empty($this->registro["codigo"])):
+                            $atendimentoPacotes = $this->registro->findDependentRowSet("Model_AtendimentoPacote",null,$this->registro->select()->order("codigo DESC"));
+                        endif; 
+                        echo $this->partial("/atendimento/pacote.phtml", array("tipos"=>$this->tiposPacotes)); 
+                    ?>
+                </div>
+                
+                <div class="hospedagem abaContent">
+                    <?php
+                        $atendimentoHospedagens = array();
+                        if(!empty($this->registro["codigo"])):
+                            $atendimentoHospedagens = $this->registro->findDependentRowSet("Model_AtendimentoHospedagem",null,$this->registro->select()->order("codigo DESC"));
+                        endif; 
+                        echo $this->partial("/atendimento/hospedagem.phtml", array("tipos"=>$this->tiposHospedagens, "atendimentoHospedagens"=>$atendimentoHospedagens)); 
+                    ?>
+                </div>
+                
+                <div class="passagem abaContent">
+                    <?php                        
+                        echo $this->partial("/atendimento/passagem.phtml"); 
+                    ?>
+                </div>
+                
+                <div class="seguro abaContent">
+                    <?php                        
+                        echo $this->partial("/atendimento/seguro.phtml"); 
+                    ?>
+                </div>
+                
+                <div class="historico abaContent">
+                    <?php                        
+                        echo $this->partial("/atendimento/historico.phtml"); 
+                    ?>
+                </div>
+                   	    
+<?php endif; ?> 
+                
+            </div>
+            <div class="mws-button-row">
+                <input type="submit" class="mws-button red" value="Enviar" />
+                <?php
+                if (!$this->iframe):
+                    ?>    			
+
+                    <input id="voltar" type="reset" class="mws-button gray" value="Voltar" onclick="location.href = '<?php echo $this->url(array("controller" => $this->controllerName, "action" => "index", "module" => "admin"), null, true); ?>'" />
+                    <?php
+                else:
+                    ?>
+                    <input type="reset" class="mws-button gray" value="Fechar" onclick="window.parent.$('#dialog').dialog('close');" />
+                <?php
+                endif;
+                ?> 
+            </div> 	
+        </form>    	
+    </div>
+</div>	

@@ -1,0 +1,22 @@
+<?php if ($this->pageCount > 1): ?>
+<div class="dataTables_info">Mostrando <?php echo $this->firstItemNumber; ?> à <?php echo $this->lastItemNumber; ?> de <?php echo $this->totalItemCount; ?> registros</div>
+<div class="dataTables_paginate paging_full_numbers">
+	<span title="<?php echo $this->first;?>" class="first paginate_button <?php echo ($this->current == $this->first)?"paginate_button_disabled":""?>">
+		Primeiro
+	</span>
+	<span title="<?php echo $this->previous;?>" class="previous paginate_button <?php echo !(isset($this->previous))?"paginate_button_disabled":""?>">
+		Anterior
+	</span>
+<?php foreach ($this->pagesInRange as $page): if ($page == $this->current): ?>	
+	<span><span class="paginate_active"><?php echo $page;?></span></span>
+<?php else: ?>	
+	<span><span class="paginate_button" title="<?php echo $page;?>"><?php echo $page;?></span></span>
+<?php endif; endforeach; ?>	
+	<span title="<?php echo $this->next;?>" class="next paginate_button <?php echo !(isset($this->next))?"paginate_button_disabled":""?>">
+		Próximo
+	</span>
+	<span title="<?php echo $this->last;?>" class="last paginate_button <?php echo ($this->current == $this->last)?"paginate_button_disabled":""?>">
+		Último
+	</span>
+</div>
+<?php endif;?>		        

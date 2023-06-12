@@ -1,0 +1,172 @@
+<?php echo $this->doctype(); ?>
+<html>
+<head>
+<!-- BaseURL //-->
+<base href="http://<?php echo $_SERVER['SERVER_NAME']. $this->baseUrl(); ?>/" target="_parent" />
+<!-- Titulo //-->
+<?php echo $this->headTitle()->setSeparator(' / ')->setIndent("\t"); ?>
+<!-- Metatags //-->
+<?php echo $this->headMeta()->setIndent("\t"); ?>
+<!-- Estilos (CSS) //-->
+<?php echo $this->headLink()->setIndent("\t"); ?>
+<?php echo $this->headStyle()->setIndent("\t"); ?>
+<script type="text/javascript">
+	var _baseUrl = "http://<?php echo $_SERVER['SERVER_NAME']. $this->baseUrl(); ?>/";
+	var _controller = "<?php echo $this->controllerName; ?>";
+	var _module = "<?php echo $this->moduleName; ?>";
+	var _action = "<?php echo $this->actionName; ?>";
+</script>
+<!-- Scripts (JS) //-->
+<?php echo $this->headScript()->setIndent("\t"); ?>
+
+<?php 
+//Logomarca padrão
+$logomarca = !empty($this->configuracao["logomarca"])?$this->configuracao["logomarca"]:"/images/admin/tur-logo.png";
+?>
+</head>
+<body>	
+	<div id="mws-header" class="clearfix">
+	    <!-- Logomarca -->
+	    <div id="mws-logo-container">
+	        <div id="mws-logo-wrap">
+	            <a href="<?php echo $this->baseUrl("/admin"); ?>">
+	                <img src="<?php echo $this->baseUrl($logomarca); ?>" alt="Admin" title="Admin" />
+	            </a>
+	         </div>
+	     </div>
+	     <!-- Área do Usuário -->
+	     <div id="mws-user-tools" class="clearfix">
+	         <!-- Mensagens do Usuário -->
+         	<div id="mws-user-message" class="mws-dropdown-menu" style="display: none;">
+            	<a href="javascript://" class="mws-i-24 i-message mws-dropdown-trigger">Mensagens</a>
+             	<span id="qtdMensagens" class="mws-dropdown-notif" style="display: none;"></span>
+	             <div class="mws-dropdown-box">
+	                 <div id="mensagens" class="mws-dropdown-content"></div>
+	             </div>
+         	</div>
+	        <!-- Funções do Usuário -->
+	        <div id="mws-user-info" class="mws-inset">
+	            <div id="mws-user-photo">
+	                <?php 
+	                    $foto = empty($this->usuario["foto"])?"/images/admin/user.jpg":$this->usuario["foto"];
+	                ?>
+	                <img height="28" src="<?php echo $this->baseUrl($foto);?>" title="<?php echo $this->usuario["nome"]; ?>" alt="<?php echo $this->usuario["nome"]; ?>" />
+	            </div>
+	            <div id="mws-user-functions">
+	                <div id="mws-username">
+	                    Olá, <?php echo $this->usuario["nome"];?>
+	                </div>
+	                <ul>	                    
+	                    <li><a id="alterar-senha" href="javascript://">Redefinir Senha</a></li>
+	                    <li><a href="<?php echo $this->url(array('controller'=>'login','action'=>'logout'));?>">Sair</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	       <!-- Box redefinir senha -->
+	       <div style="display: none;" id="dialog-alterar-senha" title="Redefinir Senha">
+	       		<div id="retorno-dialog" style="margin-top:0px;margin-bottom: 5px;" class="mws-form-message warning"></div>
+				<div class="mws-panel-body">
+					<form action="<?php echo $this->url(array("controller"=>"login", "action"=>"salvar-senha"));?>" class="mws-form" id="formAlterarSenha">											
+						<input name="usuario" type="hidden" value="<?php echo $this->usuario["usuario"];?>">
+						<div class="mws-form-block">                                
+							<div class="mws-form-row">
+								<label>Nova senha</label>
+								<div class="mws-form-item large">
+									<input name="senha" id="senha" type="password" class="mws-textinput">
+								</div>
+							</div>			
+							<div class="mws-form-row">
+								<label>Confirmar senha</label>
+								<div class="mws-form-item large">
+									<input name="confirmar-senha" type="password" class="mws-textinput">
+								</div>
+							</div>			
+					    </div>		    
+					</form>
+				</div>
+			</div>
+	       <!-- End redefinir senha -->
+	       
+	       <!-- Box cadastrar registros -->
+	       <div style="display: none;" id="dialog">
+               <iframe width="100%" height="100%" id="iframe" src=""></iframe>
+           </div>
+	       <!-- End cadastrar registros -->
+	    </div>
+	</div>
+	<div id="mensagem" title="Salvo" style="display: none;">
+    	<p></p>
+    </div>
+	<div id="mws-wrapper">
+	   <!-- Marcação necessária, não remover -->
+	    <div id="mws-sidebar-stitch"></div>
+	    <div id="mws-sidebar-bg"></div>
+	    <!-- Sidebar Wrapper -->
+        <div id="mws-sidebar">
+        	<!-- Box de busca -->
+        	<div id="mws-searchbox" class="mws-inset">
+            	<form action="javascript://">
+                	<input id="txtBusca" type="text" class="mws-search-input" />
+                    <input type="submit" class="mws-search-submit" />
+                </form>
+            </div>
+            <!-- Menu de Navegação -->
+            <div id="mws-navigation">
+            	<ul>            	    
+<?php 
+    if(count($this->resourcePermitidos)>0):
+        foreach($this->resourcePermitidos as $resource):
+            if($resource->nome == "Relatórios"):        
+?>
+                    <li class="<?php echo ($this->controllerName == $resource->controller)?"active":"";?>">
+	                	<a href="#" class="mws-i-24 i-documents-1" id="menu-projeto">Relatórios</a>
+	                	<ul style="display: none;" class="closed">	                	    
+                        	<li><a href="<?php echo $this->url(array('controller'=>'relatorio', 'module'=>'admin', 'action'=>'cotacao'),null,true);?>">Cotação</a></li>
+                        	<li style="display: none;"><a href="<?php echo $this->url(array('controller'=>'relatorio', 'module'=>'admin', 'action'=>'pacote'),null,true);?>">Pacotes</a></li>
+                        	<li><a href="<?php echo $this->url(array('controller'=>'relatorio', 'module'=>'admin', 'action'=>'passageiro'),null,true);?>">Passageiros</a></li>
+                        	<li><a href="<?php echo $this->url(array('controller'=>'relatorio', 'module'=>'admin', 'action'=>'pagamento'),null,true);?>">Contas a receber</a></li>
+                        	<li><a href="<?php echo $this->url(array('controller'=>'relatorio', 'module'=>'admin', 'action'=>'contratante'),null,true);?>">Contratantes</a></li>
+                        </ul>	                	
+	                </li>  
+<?php
+            else: 
+?>    
+                    <li class="<?php echo ($this->controllerName == $resource->controller)?"active":"";?>">
+	                	<a href="<?php echo $this->url(array('controller'=>$resource->controller, 'module'=>'admin'),null,true);?>" class="mws-i-24 <?php echo $resource->icone; ?>" id="menu-projeto"><?php echo $resource->nome; ?></a>	                	
+	                </li>   
+<?php
+            endif;
+        endforeach; 
+    endif;
+    
+    if($this->moduleName == "sac"):
+?> 
+                    <li class="<?php echo ($this->controllerName == "cliente")?"active":"";?>">
+	                	<a href="<?php echo $this->url(array('controller'=>'cliente', 'action'=>'cadastro', 'module'=>'sac'),null,true);?>" class="mws-i-24 i-admin-user-2" id="menu-projeto">Meu&nbsp;Cadastro</a>	                	
+	                </li>    
+                    <li class="<?php echo ($this->controllerName == "contas-pagar")?"active":"";?>">
+	                	<a href="<?php echo $this->url(array('controller'=>'contas-pagar', 'module'=>'sac'),null,true);?>" class="mws-i-24 i-price-tags" id="menu-projeto">Contas&nbsp;a&nbsp;Pagar</a>	                	
+	                </li>    
+<?php 
+    endif;
+?>    
+                              	                	
+                </ul>
+            </div>
+        </div>
+	    <!-- Conteúdo -->
+	    <div id="mws-container" class="clearfix">	 	    	     
+	        <!-- Conteúdo Principal -->
+	        <div class="container">	        	
+	        	<?php echo $this->layout()->content; ?>
+	        </div>
+	        <!-- Fim Conteúdo Principal -->
+	        <!-- Rodapé -->
+	        <div id="mws-footer">
+	            Copyright <?php echo date("Y"); ?> Todos direitos reservados.
+	        </div>
+	        <!-- Fim Rodapé -->
+	    </div>
+	</div>
+</body>
+</html>

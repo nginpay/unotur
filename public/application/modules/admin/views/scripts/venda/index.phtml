@@ -1,0 +1,166 @@
+
+<div id="grid" class="mws-panel grid_8">
+	<div class="mws-panel-header">
+    	<span class="mws-i-24 i-table-1">Lista de Registros</span>
+    </div>
+    
+    <div class="mws-panel-body">
+    <div class="dataTables_wrapper">
+    	<div class="dataTables_length">
+			<label>
+				Mostrar 
+				<select id="select-por-pagina" size="1">					
+					<option value="10">10</option>
+					<option value="25">25</option>
+					<option value="100" selected="selected">100</option>					
+				</select> registros
+    		</label>
+    	</div>
+    	<div class="mws-panel-toolbar top clearfix">
+			<ul>
+				<li><a id="novo" class="mws-ic-16 ic-direction viewPacote" href="javascript://" title="Pacotes">Pacotes</a></li>
+				<li><a id="novo" class="mws-ic-16 ic-accept edit" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"cadastro", "module"=>"admin"));?>" title="Novo">Novo</a></li>
+				<li><a class="mws-ic-16 ic-arrow-refresh" href="javascript://" title="Atualizar registros">Atualizar</a></li>				
+				<li><a class="mws-ic-16 ic-arrow-divide duplicar" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"duplicar", "module"=>"admin"));?>" title="Duplicar">Duplicar Registro</a></li>				
+				<li><a class="mws-ic-16 ic-cross delete" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"excluir", "module"=>"admin"));?>" title="Excluir">Excluir</a></li>				
+		    </ul>
+		</div>
+		
+    	<div class="filter">    		    		
+    		<form id="form_consulta" action="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"index-dados", "module"=>"admin"));?>" method="post" enctype="multipart/form-data">
+	    		<input name="pagina" type="hidden" id="pagina">
+				<input name="por-pagina" type="hidden" id="porpagina" value="100">
+				<input name="ordenacao" type="hidden" id="ordenacao">
+	    		
+	    		<div class="mws-panel-body" style="margin:0;">
+                    <div class="mws-form-inline mws-form">                                
+                	    <div class="mws-form-cols clearfix boxFiltro" style="display: none;">
+                	    
+                	        <div class="mws-form-col-2-8 alpha">
+                			    <label>Código da Venda</label>
+                			    <div class="mws-form-item large">
+                					 <input name="codigo" type="text" class="mws-textinput numero" /> 
+                			    </div>
+                			</div>
+                			
+                	        <div class="mws-form-col-2-8 alpha">
+                			    <label>Conta a Receber</label>
+                			    <div class="mws-form-item large">
+                					 <input name="vendaReceber" type="text" class="mws-textinput numero" /> 
+                			    </div>
+                			</div>
+                				
+                	        <div class="mws-form-col-2-8 alpha">
+                			    <label>Contratante</label>
+                			    <div class="mws-form-item large">
+                					 <input name="cliente" type="text" class="mws-textinput" /> 
+                			    </div>
+                			</div>
+                				
+                	        <div class="mws-form-col-2-8 alpha">
+                			    <label>Passageiro</label>
+                			    <div class="mws-form-item large">
+                					 <input name="passageiro" type="text" class="mws-textinput" /> 
+                			    </div>
+                			</div>	                			
+                		</div>
+                		
+                		<div class="mws-button-row">
+                            <input id="buscar" type="submit" class="mws-button green" value="Buscar" style="display: none;" />
+                            <input id="limparFiltro" type="button" class="mws-button blue" value="Limpar" style="display: none;" />
+                            <input id="filtrar" type="button" class="mws-button orange" value="Filtrar" />
+                		</div> 
+                		
+                	</div>
+                </div>
+	    		
+    		</form>
+    	</div>
+    	    		        	
+        <table class="mws-datatable-fn mws-table">
+            <thead>
+                <tr>
+                	<th title=""><input id="selectAll" type="checkbox"></th>                	
+<?php 
+	if(count($this->etiquetas)>0):
+	foreach($this->etiquetas as $chave => $etiqueta):		
+?> 	
+					<th char="<?php echo $chave;?>" class="sorting"><?php echo $etiqueta;?></th>
+<?php
+	endforeach; 
+	endif;
+?>	                
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                                                
+            </tbody>
+        </table>
+        <!-- Paginação --> 
+        <div id="paginacao"></div>       	        
+    </div>
+    </div>
+</div>
+<!-- Panels End -->
+
+<!-- Box cadastro -->
+<div id="cadastro"></div>
+
+<!-- Box duplicar -->
+<div style="display: none;" id="dialog-duplicar" title="Duplicar Para">
+	<div id="retorno-dialog-duplicar" style="margin-top:0px;margin-bottom: 5px;" class="mws-form-message warning"></div>
+	<div class="mws-panel-body">
+		<form action="javascript://" class="mws-form" id="formReplica">														
+			<input name="venda" type="hidden" value="">			
+			<div class="mws-form-block">                                
+				<div class="mws-form-row">
+					<label>* Cliente</label>
+					<div class="mws-form-item large">
+					    <select id="clientereplica" class="blockLeft chzn-select" name="cliente">
+        				    <option value="">Selecione o cliente</option>	
+        <?php 
+        if(count($this->clientes) > 0):
+        	foreach($this->clientes as $cliente):
+        	    $selected = ($cliente->codigo == $this->cliente)?'selected="selected"':'';				
+        ?>                        
+        					<option <?php echo $selected; ?> value="<?php echo $cliente["codigo"];?>">
+        						<?php echo $cliente["nome"];?>
+        					</option>
+        <?php		
+        	endforeach;
+        endif;
+        ?>													
+        			    </select>
+					</div>
+				</div>			
+				<div class="mws-form-row">
+					<label>Passaporte</label>
+					<div class="mws-form-item large">
+						<input maxlength="50" name="passaporte" id="passaporte" type="text" class="mws-textinput">
+					</div>
+				</div>			
+				<div class="mws-form-row">
+					<label>Emissão do Passaporte</label>
+					<div class="mws-form-item large">						
+						<input name="emissaopassaporte" id="emissaopassaporte" type="text" value="0,00" class="mws-textinput data">
+					</div>
+				</div>			
+				<div class="mws-form-row">
+					<label>Orgão do Passaporte</label>
+					<div class="mws-form-item large">
+						<input maxlength="100" name="emissorpassaporte" id="emissorpassaporte" type="text" class="mws-textinput">
+					</div>
+				</div>			
+				<div class="mws-form-row">
+					<label>Vencimento do Passaporte</label>
+					<div class="mws-form-item large">
+						<input name="vencimentopassaporte" id="vencimentopassaporte" type="text" class="mws-textinput data">    					
+					</div>
+				</div>			
+							
+		    </div>		    
+		</form>
+	</div>
+</div>
+<!-- End pagamento -->

@@ -1,0 +1,205 @@
+<div class="mws-panel grid_8">
+	<div class="mws-panel-header">
+	    <span class="mws-i-24 i-pencil">Editor de Passageiro</span>
+	</div>
+	<div class="mws-panel-body">
+<?php 
+    if(!empty($this->registro["codigo"])):    
+?>                            
+	    <div class="mws-wizard clearfix">
+            <ul>
+                <li id="cadastro" class="current aba">
+                    <a href="javascript://" class="mws-ic-16 ic-pencil" title="Dados Cadastrais">Dados Cadastrais</a>
+                </li>                               
+            </ul>
+        </div>	    
+<?php 
+    endif;
+?>                               
+    	<form action="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"salvar-cadastro", "module"=>"admin"));?>" class="mws-form" id="formCadastro">		
+    		<input type="hidden" id="cadastro-iframe" value="<?php echo $this->iframe; ?>" />		
+    		<input id="codigo" type="hidden" name="codigo" value="<?php echo $this->registro["codigo"]; ?>" />
+    		<div class="mws-form-inline">    		                                    
+			    <div class="mws-form-cols clearfix cadastro abaContent current">				
+    			    
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Nome</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["nome"]); ?>" type="text" class="mws-textinput" name="nome" maxlength="50">
+        			    </div>
+        			</div>
+        			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Sobrenome</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["sobrenome"]); ?>" type="text" class="mws-textinput" name="sobrenome" maxlength="100">
+        			    </div>
+        			</div>
+			        
+			        
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>Nacionalidade</label>
+        			    <div class="mws-form-item large">
+            			    <select name="nacionalidade" class="full_width">								
+<?php 
+if(count($this->paises) > 0):
+    $selected = '';
+	foreach($this->paises as $pais):	
+		$selected = ($this->registro["nacionalidade"] == $pais["iso"] || (empty($this->registro["codigo"]) && $pais["iso"] == 'BR'))?"selected='selected'":"";	
+?>                        
+        						<option <?php echo $selected; ?> value="<?php echo $pais["iso"];?>">
+        							<?php echo $pais["nome"];?>
+        						</option>
+<?php		
+	endforeach;
+endif;
+?>							
+    						</select>
+						</div>
+					</div>
+			        			
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>Naturalidade</label>
+        			    <div class="mws-form-item large">
+            			    <select id="estado" data-cidade="<?php echo $this->registro["naturalidade"]?>" class="full_width">								
+    							<?php 
+    								foreach($this->estados as $estado):
+        								if(!empty($this->registro["cidade"])){
+        								    $cidade = $this->registro->findParentRow("Model_Cidade");
+        								}
+        								if($cidade->estado == $estado["codigo"]){
+        								    $selected = "selected='selected'";
+        								} elseif(empty($this->registro["codigo"]) && $estado["codigo"] == 10){
+        								    $selected = "selected='selected'";
+        								} else {
+        								    $selected = "";
+        								}
+    								
+    							?>
+    								<option <?php echo $selected; ?> value="<?php echo $estado["sigla"]; ?>"><?php echo $estado["sigla"]; ?></option>
+    							<?php endforeach;?>						
+    						</select>
+						</div>
+					</div>						
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>&nbsp;</label>
+        			    <div class="mws-form-item large">
+        					<select id="cidade" name="naturalidade" class="full_width cidade"></select>
+        			    </div>
+        			</div>
+        			
+					
+					<div class="mws-form-col-2-8 alpha">
+        			    <label>Passaporte</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["passaporte"]); ?>" type="text" class="mws-textinput" name="passaporte" maxlength="50">
+        			    </div>
+        			</div>	
+        			
+					<div class="mws-form-col-2-8 alpha">
+        			    <label>Emissão do Passaporte</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo $this->data($this->registro["emissaopassaporte"]); ?>" type="text" class="data mws-textinput" name="emissaopassaporte" maxlength="50">
+        			    </div>
+        			</div>
+        				
+					<div class="mws-form-col-2-8 alpha">
+        			    <label>Vencimento do Passaporte</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo $this->data($this->registro["vencimentopassaporte"]); ?>" type="text" class="data mws-textinput" name="vencimentopassaporte" maxlength="50">
+        			    </div>
+        			</div>	
+        			
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>Orgão Emissor</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo stripslashes($this->registro["emissorpassaporte"]); ?>" type="text" class="mws-textinput" name="emissorpassaporte" maxlength="100">
+        			    </div>
+        			</div>	
+								
+        			<div class="mws-form-col-1-8 alpha">
+        			    <label>País Passaporte</label>
+        			    <div class="mws-form-item large">
+            			    <select name="paispassaporte" class="full_width">								
+<?php 
+if(count($this->paises) > 0):
+    $selected = '';
+	foreach($this->paises as $pais):	
+		$selected = ($this->registro["paispassaporte"] == $pais["iso"] || (empty($this->registro["codigo"]) && $pais["iso"] == 'BR'))?"selected='selected'":"";	
+?>                        
+        						<option <?php echo $selected; ?> value="<?php echo $pais["iso"];?>">
+        							<?php echo $pais["nome"];?>
+        						</option>
+<?php		
+	endforeach;
+endif;
+?>							
+    						</select>
+						</div>
+					</div>
+			
+        			<div class="mws-form-col-2-8 alpha">
+        			    <label>* Data Nascimento</label>
+        			    <div class="mws-form-item large">
+        					<input value="<?php echo (!empty($this->registro["datanascimento"]))?$this->data($this->registro["datanascimento"]):""; ?>" type="text" class="mws-textinput data" name="datanascimento">
+        			    </div>
+        			</div>
+				            			
+        			<div class="mws-form-col-2-8 alpha">
+        				<label>* Sexo</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo ($this->registro['sexo'] == 'Masculino' || empty($this->registro['sexo']))?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="Masculino" type="radio" name="sexo"> Masculino</label></li>
+        						<li><label><input <?php echo ($this->registro['sexo'] == 'Feminino')?'checked="checked"':""; ?> style="vertical-align: baseline;" value="Feminino" type="radio" name="sexo"> Feminino</label></li>						
+        					</ul>
+        				</div>
+        			</div>
+        			        			            	    
+            	    <div class="mws-form-col-2-8 alpha">
+        				<label>Ficha Médica</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo ($this->registro['fichamedica'])?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="1" type="radio" name="fichamedica"> Sim</label></li>
+        						<li><label><input <?php echo (!$this->registro['fichamedica'] || empty($this->registro['fichamedica']))?'checked="checked"':""; ?> style="vertical-align: baseline;" value="0" type="radio" name="fichamedica"> Não</label></li>						
+        					</ul>
+        				</div>
+        			</div>
+        			        			
+            	    <div class="mws-form-col-2-8 alpha">
+        				<label>Cópia do Passaporte</label>				
+        				<div class="mws-form-item clearfix">
+        					<ul class="mws-form-list inline">
+        						<li><label><input <?php echo ($this->registro['copiapassaporte'])?'checked="checked"':''; ?>  style="vertical-align: baseline;" value="1" type="radio" name="copiapassaporte"> Sim</label></li>
+        						<li><label><input <?php echo (!$this->registro['copiapassaporte'] || empty($this->registro['copiapassaporte']))?'checked="checked"':""; ?> style="vertical-align: baseline;" value="0" type="radio" name="copiapassaporte"> Não</label></li>						
+        					</ul>
+        				</div>
+        			</div>
+					  			
+        			<div class="mws-form-col-8-8 omega">
+        				<label>Observações</label>
+        				<div class="mws-form-item large">
+        					<textarea cols="100%" rows="100%" name="observacoes"><?php echo stripslashes($this->registro["observacoes"]); ?></textarea>					
+        				</div>				
+        			</div>
+						        		
+        	    </div> 
+        	            	           	    
+        	</div>
+        	<div class="mws-button-row">
+    			<input type="submit" class="mws-button red" value="Enviar" />
+<?php 
+    if(!$this->iframe):
+?>    			
+    			<input id="voltar" type="reset" class="mws-button gray" value="Voltar" onclick="location.href='<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"index", "module"=>"admin"),null,true);?>'" />
+<?php 
+    else:
+?>
+                <input type="reset" class="mws-button gray" value="Fechar" onclick="window.parent.$('#dialog').dialog('close');" />
+<?php
+    endif; 
+?>
+    		</div>	
+    	</form>    	
+	</div>
+</div>

@@ -1,0 +1,59 @@
+
+<!-- Paginação do crud -->
+<tr id="paginacao-temp" style="display: none;">
+	<td>
+		<?php echo $this->paginationControl($this->paginacao, "Sliding", "/partial/paginacao.phtml"); ?>
+	</td>
+</tr>
+
+<?php
+if(count($this->paginacao)>0):
+
+$aux = 0;
+foreach($this->paginacao as $dados):
+    $class = ($aux%2 == 0)?"even":"odd";  
+    $venda = $dados->findParentRow("Model_Venda");
+    $contratante = $venda->findParentRow("Model_Cliente");
+    $descricaoPacote = null;
+    $dataSaida = null;
+    $telefone = null;
+    $celular = null;
+    $vendaProduto = $venda->findDependentRowSet("Model_VendaProduto")->current();
+    if($vendaProduto){
+        $pacote = $vendaProduto->findParentRow("Model_Pacote");
+        if($pacote){
+            $descricaoPacote = $pacote->descricao;
+            $dataSaida = $this->data($pacote->datasaida);
+        }
+    }
+
+    $cliente = $venda->findParentRow("Model_Cliente");
+?>
+
+<tr class="gradeX <?php echo $class;?>">    
+    <td class="center"><?php echo $dados->venda; ?></td>      
+    <td class="center"><?php echo $dados->codigo; ?></td>      
+    <td class="center"><?php echo $contratante->nome; ?></td>      
+    <td class="center"><?php echo $dados->tipo; ?></td>      
+    <td class="center"><?php echo $dados->parcela; ?></td>      
+    <td class="center"><?php echo $this->data($dados->datavencimento); ?></td>      
+    <td class="center"><?php echo $this->NumeroParaMoeda($dados->valor); ?></td>          
+    <td class="center"><?php echo $descricaoPacote; ?></td>          
+    <td class="center"><?php echo $dataSaida; ?></td>          
+    <td class="center"><?php echo $cliente->telefonefixo; ?></td>          
+    <td class="center"><?php echo $cliente->celular; ?></td>          
+    <td>
+        <a data-venda="<?php echo $dados->venda; ?>" class="mws-ic-16 ic-edit viewVenda" href="javascript://" title="Editar">&nbsp;</a>
+        <a data-conta="<?php echo $dados->codigo; ?>" class="mws-ic-16 ic-desktop viewAtendimento" href="javascript://" title="Observação">&nbsp;</a>        
+        <a data-codigo="<?php echo $dados->codigo; ?>"  class="mws-ic-16 ic-cross deleteLinha deleteRow" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"excluir-parcela", "module"=>"admin"));?>" title="Excluir">&nbsp;</a>        
+    </td>
+</tr>	
+
+<?php
+$aux++;
+endforeach;
+
+else :
+	echo '<tr class="gradeX even"> <td style="text-align:center;" class="center" colspan="12">Nenhum registro encontrado, utilize o filtro de registros</td>';
+endif;
+?>

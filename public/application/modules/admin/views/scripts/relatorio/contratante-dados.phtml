@@ -1,0 +1,84 @@
+
+<!-- Paginação do crud -->
+<tr id="paginacao-temp" style="display: none;">
+	<td>
+		<?php echo $this->paginationControl($this->paginacao, "Sliding", "/partial/paginacao.phtml"); ?>
+	</td>
+</tr>
+
+<?php
+if(count($this->paginacao)>0):
+
+$aux = 0;
+$totalDivida = 0;
+$totalPago = 0;
+$totalValor = 0;
+$totalPassageiros = 0;
+foreach($this->paginacao as $dados):
+    $class = ($aux%2 == 0)?"even":"odd";      
+    $contratante = $dados->findParentRow("Model_Cliente");
+    $descricaoPacote = null;
+    $telefone = null;
+    $celular = null;
+    $vendaProduto = $dados->findDependentRowSet("Model_VendaProduto")->current();
+    $moedaNome = null;
+    if($vendaProduto){
+        $pacote = $vendaProduto->findParentRow("Model_Pacote");
+        if($pacote){
+            $descricaoPacote = $pacote->descricao;
+        }
+        $moeda = $vendaProduto->findParentRow("Model_Moeda");
+        $moedaNome = $moeda->sigla;
+    }
+    $cliente = $dados->findParentRow("Model_Cliente");    
+    $passageiros = $dados->findDependentRowSet("Model_VendaProduto",null,$dados->select()->where("passageiro IS NOT NULL"));
+    $vendaRecebida = $this->totalVendaRecebido($dados["codigo"]);
+    $divida = $dados["valortotal"] - $vendaRecebida;
+
+    $totalValor+= $dados["valortotal"];
+    $totalPago+= $vendaRecebida;
+    $totalDivida+= $divida;
+    $totalPassageiros+= count($passageiros);
+?>
+
+<tr class="gradeX <?php echo $class;?>">             
+    <td class="center"><?php echo $dados->codigo; ?></td>      
+    <td class="center"><?php echo $contratante->nome; ?></td>      
+    <td class="center"><?php echo count($passageiros); ?></td>      
+    <td class="center"><?php echo $this->NumeroParaMoeda($dados["valortotal"]); ?></td>      
+    <td class="center"><?php echo $this->NumeroParaMoeda($vendaRecebida); ?></td>                    
+    <td class="center"><?php echo $this->NumeroParaMoeda($divida); ?></td>                    
+    <td class="center"><?php echo $moedaNome; ?></td>                    
+    <td class="center"><?php echo $descricaoPacote; ?></td>          
+    <td class="center"><?php echo $cliente->telefonefixo; ?></td>          
+    <td class="center"><?php echo $cliente->celular; ?></td>          
+    <td>
+        <a target="blank" class="mws-ic-16 ic-edit edit" href="<?php echo $this->url(array("controller"=>"venda", "action"=>"cadastro", "module"=>"admin", "codigo"=>$dados["codigo"]),null,true);?>" title="Editar">&nbsp;</a>
+        <a data-codigo="<?php echo $dados->codigo; ?>"  class="mws-ic-16 ic-cross deleteLinha deleteRow" href="<?php echo $this->url(array("controller"=>$this->controllerName, "action"=>"excluir-venda", "module"=>"admin"));?>" title="Excluir">&nbsp;</a>        
+    </td>
+</tr>	
+
+<?php
+$aux++;
+endforeach;
+?>
+
+<tr class="gradeX <?php echo $class;?>">             
+    <td class="center"></td>      
+    <td class="center"></td>      
+    <td class="center"><strong><?php echo $totalPassageiros; ?></strong></td>      
+    <td class="center"><strong><?php echo $this->NumeroParaMoeda($totalValor); ?></strong></td>      
+    <td class="center"><strong><?php echo $this->NumeroParaMoeda($totalPago); ?></strong></td>      
+    <td class="center"><strong><?php echo $this->NumeroParaMoeda($totalDivida); ?></strong></td>      
+    <td class="center"></td>      
+    <td class="center"></td>      
+    <td class="center"></td>      
+    <td class="center"></td>      
+    <td class="center"></td>          
+</tr>	
+
+<?php
+else :
+	echo '<tr class="gradeX even"> <td style="text-align:center;" class="center" colspan="11">Nenhum registro encontrado, utilize o filtro de registros</td>';
+endif;
+?>

@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <style type="text/css">
+            thead tr td {
+                color:#666666;font: normal 12px Arial;font-weight: bold; text-align: left;
+            }
+
+            tbody tr td {
+                font: normal 12px Arial; text-align: left; padding: 5px;
+            }
+        </style>
+    </head>
+    
+    <body style="margin:0; padding: 0;">
+
+        <div style="width: 700px; padding: 25px; font-family: arial; font-size: 12px; color:#333333">
+
+            <div style="text-align: left; padding: 10px;">
+
+                <!--<img alt="" src="<?php echo $this->baseUrlAdm ?>img/imagensboleta/logo4a.jpg">-->
+            </div>
+
+            <div style="background-color:#E3ECF0; padding: 25px;">
+                <div style="padding-bottom: 20px;">
+                    <h1 style="font-weight: bold;">Boleto online <?php echo $this->registro["valor"];?></h1>
+
+                    Prezado(a) cliente <b><?php echo $this->registro["cliente"];?></b> <br><br/>
+
+                    Segue o link de impressão do boleto de <strong>número <?php echo $this->registro["codigo"];?></strong>
+                </div>
+
+                <div style="background-color: white;">
+                
+                    <div style="padding:5px; margin:10px;">
+                        <span style="font-weight: bold; color:#333333; font-size: 15px;">Dados de Cobrança</span>
+                        <table class="grid" width="100%">
+                            <tbody style="color: #333333;padding:6px;text-align:center;padding-left:10px;padding-right:10px;background-color:#E3ECF0;">
+
+                                <tr>
+                                    <td width="20%" align="left">Cliente: </td>
+                                    <td align="left"><b><?php echo $this->registro["cliente"] ?></b></td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Vencimento: </td>
+                                    <td align="left"><b><?php echo $this->registro["datavencimento"] ?></b></td>
+                                </tr>
+                                <tr>
+                                    <td align="left">Valor: </td>
+                                    <td align="left"><b><?php echo "R$ ".$this->registro["valor"] ?></b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="padding:10px; background: #3C6DAF; color: white; width: 120px; text-align:center; margin:10px; font-weight: bold; font-size: 16px;">
+                        <a title="Boleta" href="http://<?php echo $this->baseUrl; ?>/boleto/index/vendareceber/<?php echo $this->registro["codigo"];?>" target="_blank" style="color:white;">
+                            Imprimir Boleto
+                        </a>
+                    </div>
+                    <div>
+                        &nbsp;
+                    </div>
+                </div>
+                
+                <div style="padding-top: 20px;">
+                    Atenciosamente, <br/>
+                    <b>Equipe de Cobrança - <?php echo $this->registro["emissor"];?></b> <br/>
+                    <span style="font-size: 11px;"><br/>Caso já tenha efetuado o pagamento deste boleto, por favor desconsidere este email.</span>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

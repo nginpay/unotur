@@ -1,0 +1,16 @@
+		<article class="center erro">
+				<strong>ERRO 404</strong>			
+				<h1>Ops! A página não foi encontrada.</h1>				
+<?php if(isset($this->exception)): ?>
+				<div class="center">
+	  				<h3>Exception information:</h3>
+	  				<p><b>Message:</b> <?php echo $this->exception->getMessage() ?></p>
+					<h3>Stack trace:</h3>
+					<pre><?php echo $this->exception->getTraceAsString() ?></pre>
+					<h3>Request Parameters:</h3>
+					<pre><?php echo var_export($this->request->getParams(), true) ?></pre>
+				</div>
+<?php 
+	endif; 
+?>													
+		</article>

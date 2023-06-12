@@ -1,0 +1,70 @@
+<div class="mws-panel-body">    
+    <div class="mws-form-inline">                                
+        <div class="mws-form-cols clearfix formHospedagem" style="background: #E3E2E2; display: none;">
+            <input type="hidden" id="idAtendimentoHospedagem" />
+            
+            <div class="mws-form-col-2-8 alpha">				    
+                <label>* Tipo de Hospedagem</label> 				    					    
+                <div class="mws-form-item large">				    	
+                    <select id="tipo_hospedagem" class="chosen-tipo-hospedagem">
+                        <option value="">Selecione</option>	
+                        <?php
+                        if (count($this->tipos) > 0):
+                            $selected = '';
+                            foreach ($this->tipos as $tipo):                                
+                                ?>                        
+                                <option value="<?php echo $tipo["codigo"]; ?>">
+                                    <?php echo $tipo["nome"]; ?>
+                                </option>
+                                <?php
+                            endforeach;
+                        endif;
+                        ?>													
+                    </select>        											
+                </div>
+            </div>
+            
+            <div class="mws-form-col-1-8 alpha">
+                <label>* Data Saída</label>
+                <div class="mws-form-item large">
+                    <input id="hospedagemDataSaida" type="text" class="mws-textinput data">        					
+                </div>
+            </div>
+                        
+            <div class="mws-form-col-1-8 alpha">
+                <label>* Data Chegada</label>
+                <div class="mws-form-item large">
+                    <input id="hospedagemDataChegada" type="text" class="mws-textinput data">        					
+                </div>
+            </div>
+            
+
+            <div class="mws-form-col-2-8 alpha">
+                <label>* Localidade</label>
+                <div class="mws-form-item large">
+                    <input id="hospedagemLocalidade" type="text" class="mws-textinput">        					
+                </div>
+            </div>			
+        </div>
+        <div class="mws-button-row">
+            <input id="adicionarHospedagem" type="button" class="mws-button green" value="Adicionar" style="display: none;" />            
+            <input id="cadastroHospedagem" type="button" class="mws-button orange" value="Novo" />
+        </div> 
+    </div>
+
+    <div class="dataTables_wrapper">
+
+        <table class="mws-table">
+            <thead>
+                <tr>
+                    <th title="Tipo">Tipo Hospedagem</th>
+                    <th title="Data de Saída">Data de Saída</th>
+                    <th title="Data Chegada">Data de Chegada</th>                    
+                    <th title="Localidade">Localidade</th>                                       
+                    <th></th>               
+                </tr>
+            </thead>
+            <tbody class="hospedagemTbody"></tbody>
+        </table>           
+    </div>
+</div>
